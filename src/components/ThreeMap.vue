@@ -2,18 +2,19 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:45:56
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-12 11:32:31
+ * @LastEditTime: 2023-04-12 15:00:56
  * @FilePath: \three-map-demo\src\components\ThreeMap.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div id="myMap" ref="myMap"></div>
+  <div id="tooltip" ref="tooltip"></div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import * as THREE from 'three'
-import { getJsonNanJingData } from '@/api/index'
+import { getJsonNanJingData, getJsonChinaData } from '@/api/index'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import * as d3 from 'd3'
 
@@ -27,11 +28,15 @@ const camera = new THREE.PerspectiveCamera(
 )
 const map = new THREE.Object3D()
 const myMap = ref()
+const tooltip = ref()
+const lastPick = ref<any>()
+
+const raycaster = new THREE.Raycaster() // 射线追踪
+const mouse = new THREE.Vector2() // 鼠标对象
 
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-// 添加旋转交互
 const controls = new OrbitControls(camera, renderer.domElement)
 
 // scene.add(cube)
@@ -46,11 +51,21 @@ const projection = d3
   .translate([0, 0])
 
 onMounted(async () => {
-  const myMapData = await getJsonNanJingData()
+  //   const myMapData = await getJsonNanJingData()
+  const myMapData = await getJsonChinaData()
   generateGeometry(myMapData)
   myMap.value.appendChild(renderer.domElement)
   setCameraHelper()
+  setLight()
   animate()
+  // 获取鼠标当前位置
+  window.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+    // 更改div位置
+    tooltip.value.style.left = event.clientX + 2 + 'px'
+    tooltip.value.style.top = event.clientY + 2 + 'px'
+  })
 })
 
 /**
@@ -109,6 +124,7 @@ function generateGeometry (jsondata: any) {
 
         const mesh = new THREE.Mesh(geometry, [material, material1])
         const line = new THREE.Line(lineGeometry, lineMaterial)
+        province.properties = elem.properties
         province.add(mesh)
         province.add(line)
         map.add(province)
@@ -124,9 +140,25 @@ function generateGeometry (jsondata: any) {
  */
 function animate () {
   requestAnimationFrame(animate)
+  // 通过摄像机和鼠标位置更新射线
+  raycaster.setFromCamera(mouse, camera)
+  // 算出射线 与当场景相交的对象有那些
+  const intersects = raycaster.intersectObjects(scene.children, true)
+
+  if (lastPick.value) {
+    lastPick.value.object.material[0].color.set('#2defff')
+    lastPick.value.object.material[1].color.set('#3480C4')
+  }
+  lastPick.value = intersects.find(
+    (item: any) => item.object.material && item.object.material.length === 2
+  )
+  if (lastPick.value) {
+    lastPick.value.object.material[0].color.set(0xff0000)
+    lastPick.value.object.material[1].color.set(0xff0000)
+  }
 
   controls.update()
-
+  showTip()
   renderer.render(scene, camera)
 }
 
@@ -137,11 +169,42 @@ function animate () {
 function setCameraHelper () {
   scene.add(new THREE.CameraHelper(camera))
 }
+
+/**
+ * @description: 设置光照
+ * @return {*}
+ */
+const setLight = () => {
+  const ambientLight = new THREE.AmbientLight(101070, 20)
+  scene.add(ambientLight) // 环境
+}
+
+const showTip = () => {
+  // 显示信息
+  if (lastPick.value) {
+    const properties = lastPick.value.object.parent.properties
+
+    tooltip.value.textContent = properties.name
+
+    tooltip.value.style.visibility = 'visible'
+  } else {
+    tooltip.value.style.visibility = 'hidden'
+  }
+}
 </script>
 
 <style scoped lang="less">
 #myMap {
   width: 100%;
   height: 100%;
+}
+
+#tooltip {
+  position: absolute;
+  z-index: 2;
+  background: white;
+  padding: 10px;
+  border-radius: 2px;
+  visibility: hidden;
 }
 </style>
