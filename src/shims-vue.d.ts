@@ -6,3 +6,5 @@ declare module '*.vue' {
 }
 
 declare module 'three'
+declare module 'd3'
+declare module '*'
