@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:45:56
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-13 16:57:51
+ * @LastEditTime: 2023-04-12 15:42:20
  * @FilePath: \three-map-demo\src\components\ThreeMap.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,6 @@ import * as THREE from 'three'
 import { getJsonNanJingData, getJsonChinaData } from '@/api/index'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import * as d3 from 'd3'
-import { initCircle, circleAnimation, drawLightBar, drawMapChina } from './CircleAction'
 
 const scene = new THREE.Scene()
 
@@ -29,62 +28,35 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 )
+const map = new THREE.Object3D()
 const myMap = ref()
 const tooltip = ref()
 const lastPick = ref<any>()
 const flag = ref<boolean>(true)
 
-const map = new THREE.Object3D()
 const raycaster = new THREE.Raycaster() // 射线追踪
 const mouse = new THREE.Vector2() // 鼠标对象
-const clock = new THREE.Clock()
-const option = {
-  radius: 10,
-  rotation: Math.PI / 2 * 1.9
-}
-// 地球
-const geometry = new THREE.SphereGeometry(option.radius, 64, 64)
-const material = new THREE.MeshPhongMaterial({
-  color: 0xccccccc,
-
-  bumpScale: 0.3
-  // blending: THREE.AdditiveBlending,
-})
-const sphere = new THREE.Mesh(geometry, material)
-// scene.add(sphere);
-sphere.rotation.y = option.rotation
-
-// set scene background
-scene.background = new THREE.CubeTextureLoader()
-  .setPath('/MilkyWay/')
-  .load([
-    'dark-s_nx.jpg',
-    'dark-s_ny.jpg',
-    'dark-s_nz.jpg',
-    'dark-s_px.jpg',
-    'dark-s_py.jpg',
-    'dark-s_pz.jpg'
-  ])
 
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
-camera.position.set(0, 0, 5)
-// 将摄像机的方向对准场景的中心点
+camera.position.set(0, 0, 15)
 camera.lookAt(scene.position)
+
+const projection = d3
+  .geoMercator()
+  .center([118.78, 32.07])
+  .scale(80)
+  .translate([0, 0])
 
 onMounted(async () => {
   const myMapData = await getJsonNanJingData()
-  const chinaMapData = await getJsonChinaData()
-  drawMapChina(myMapData, scene)
-  drawLightBar(myMapData, scene)
-  initCircle(myMapData, scene, map)
-  setMapChina(chinaMapData)
+  //   const myMapData = await getJsonChinaData()
+  generateGeometry(myMapData)
   myMap.value.appendChild(renderer.domElement)
   setCameraHelper()
-  setAxesHelper()
   setLight()
   animate()
   // 获取鼠标当前位置
@@ -96,6 +68,72 @@ onMounted(async () => {
     tooltip.value.style.top = event.clientY + 2 + 'px'
   })
 })
+
+/**
+ * @description:  获取地图要素添加到场景中
+ * @param {*} jsondata 地图数据
+ * @return {*}
+ */
+function generateGeometry (jsondata: any) {
+  // 初始化一个地图对象
+
+  jsondata.features.forEach((elem: any) => {
+    // 定一个省份3D对象
+    const province = new THREE.Object3D()
+
+    // 每个的 坐标 数组
+    const coordinates = elem.geometry.coordinates
+    // 循环坐标数组
+    coordinates.forEach((multiPolygon: any) => {
+      multiPolygon.forEach((polygon: any) => {
+        const shape = new THREE.Shape()
+        const lineMaterial = new THREE.LineBasicMaterial({
+          color: 'white',
+          linewidth: 1,
+          linecap: 'round', // ignored by WebGLRenderer
+          linejoin: 'round' // ignored by WebGLRenderer
+        })
+        const lineGeometry = new THREE.BufferGeometry()
+        const points = [] as any
+
+        for (let i = 0; i < polygon.length; i++) {
+          const [x, y] = projection(polygon[i])
+          if (i === 0) {
+            shape.moveTo(x, -y)
+          }
+          shape.lineTo(x, -y)
+          points.push(new THREE.Vector3(x, -y, 4))
+        }
+        lineGeometry.setFromPoints(points)
+
+        const extrudeSettings = {
+          depth: 8,
+          bevelEnabled: false
+        }
+
+        const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+        const material = new THREE.MeshBasicMaterial({
+          color: '#2defff',
+          transparent: true,
+          opacity: 0.6
+        })
+        const material1 = new THREE.MeshBasicMaterial({
+          color: '#3480C4',
+          transparent: true,
+          opacity: 0.5
+        })
+
+        const mesh = new THREE.Mesh(geometry, [material, material1])
+        const line = new THREE.Line(lineGeometry, lineMaterial)
+        province.properties = elem.properties
+        province.add(mesh)
+        province.add(line)
+        map.add(province)
+      })
+    })
+  })
+  scene.add(map)
+}
 
 /**
  * @description: 添加相机轨道运动
@@ -115,8 +153,7 @@ function animate () {
   lastPick.value = intersects.find(
     (item: any) => item.object.material && item.object.material.length === 2
   )
-  if (flag.value) {
-    // 拦截器：放在第一次加载触发选中状态
+  if (flag.value) { // 拦截器：放在第一次加载触发选中状态
     flag.value = !flag.value
     controls.update()
     showTip()
@@ -129,8 +166,6 @@ function animate () {
   }
   controls.update()
   showTip()
-  const delta = clock.getDelta()
-  circleAnimation(delta)
   renderer.render(scene, camera)
 }
 
@@ -142,29 +177,15 @@ function setCameraHelper () {
   scene.add(new THREE.CameraHelper(camera))
 }
 
-const setAxesHelper = () => {
-  const axes = new THREE.AxesHelper(100)
-  scene.add(axes)
-}
-
 /**
  * @description: 设置光照
  * @return {*}
  */
 const setLight = () => {
   const ambientLight = new THREE.AmbientLight(101070, 20)
-  const spotLight = new THREE.SpotLight(0xffffff)
-  spotLight.position.set(20, 30, 10)
-  spotLight.angle = 2.05
-  spotLight.distance = 200
-  scene.add(spotLight) // 环境
   scene.add(ambientLight) // 环境
 }
 
-/**
- * @description: 提示框
- * @return {*}
- */
 const showTip = () => {
   // 显示信息
   if (lastPick.value) {
@@ -175,13 +196,6 @@ const showTip = () => {
   } else {
     tooltip.value.style.display = 'none'
   }
-}
-
-const setMapChina = (param: any) => {
-  const list = [] as any
-  param.features.forEach((feature: any) => {
-    // feature.geometry.coordinates.forEach((coordinate) => {})
-  })
 }
 </script>
 
