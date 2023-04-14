@@ -2,21 +2,28 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 08:24:13
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-14 09:57:44
+ * @LastEditTime: 2023-04-14 11:05:46
  * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\index.ts
  * @Description: main logic
  */
 import * as THREE from 'three'
 import { gradientRampMaterial } from './composables/shader'
 import { projection, map, scene, camera, renderer } from './composables/baseObj'
-import { composer } from './composables/outline'
+import { createOutLine } from './composables/outline'
 
 scene.add(camera)
 // scene.add(axes)
 
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-export const animate = () => {
+let composer: any
+
+export const initRender = () => {
+  composer = createOutLine()
+  animate()
+}
+
+const animate = () => {
   requestAnimationFrame(animate)
 
   renderer.render(scene, camera)
@@ -46,8 +53,8 @@ export const setGeometry = (jsondata: any) => {
       multiPolygon.forEach((polygon: any) => {
         const shape = new THREE.Shape()
         const lineMaterial = new THREE.LineBasicMaterial({
-          color: 'white',
-          linewidth: 1,
+          color: 'green',
+          linewidth: 10,
           linecap: 'round', // ignored by WebGLRenderer
           linejoin: 'round' // ignored by WebGLRenderer
         })
@@ -75,11 +82,6 @@ export const setGeometry = (jsondata: any) => {
           transparent: true,
           opacity: 0.6
         })
-        // const material1 = new THREE.MeshBasicMaterial({
-        //   color: '#00ff33',
-        //   transparent: true,
-        //   opacity: 0.5
-        // })
 
         const mesh = new THREE.Mesh(geometry, [material, gradientRampMaterial])
         const line = new THREE.Line(lineGeometry, lineMaterial)

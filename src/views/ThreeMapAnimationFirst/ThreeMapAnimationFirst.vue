@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 08:24:01
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-14 09:53:32
+ * @LastEditTime: 2023-04-14 11:08:05
  * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\ThreeMapAnimationFirst.vue
  * @Description: three.js add animation one
 -->
@@ -16,24 +16,20 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { animate, setGeometry } from './index'
+import { initRender, setGeometry } from './index'
 import { renderer } from './composables/baseObj'
+// import { getJsonChinaData, getJsonPuKouData } from '@/api/index'
 import { getJsonPuKouData } from '@/api/index'
-import { mouseClick } from './composables/outline'
 
 const myMap = ref()
 
 onMounted(async () => {
   // const myMapData = await getJsonNanJingData()
-  // const chinaData = await getJsonChinaData()
   const pukouData = await getJsonPuKouData()
   setGeometry(pukouData)
   myMap.value.appendChild(renderer.domElement)
-  // 添加监听
-  window.addEventListener('click', (e) => {
-    mouseClick(e)
-  })
-  animate()
+
+  initRender()
 })
 </script>
 
