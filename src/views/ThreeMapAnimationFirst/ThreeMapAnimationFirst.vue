@@ -4,7 +4,7 @@
  * @LastEditors: TQtong 2733707740@qq.com
  * @LastEditTime: 2023-04-14 11:08:05
  * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\ThreeMapAnimationFirst.vue
- * @Description: three.js add animation one
+ * @Description: three.js add first animation
 -->
 
 <template>

@@ -22,6 +22,3 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### Attention
-First: ThreeMapAnimation: this animation don't add axes, if you do that, outline animation will to be fail

@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 08:57:46
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-14 11:06:36
+ * @LastEditTime: 2023-04-14 14:04:41
  * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\composables\outline.ts
  * @Description: outline animation
  */
@@ -32,7 +32,7 @@ export const mouseClick = (e: any): void => {
 }
 
 export const createOutLine = (): any => {
-  // 创建一个EffectComposer（效果组合器）对象，然后在该对象上添加后期处理通道。
+  // 创建一个EffectComposer（对象，然后在该对象上添加后期处理通道。
   const composer = new EffectComposer(renderer)
   // 新建一个场景通道  为了覆盖到原理来的场景上
   const renderPass = new RenderPass(scene, camera)
