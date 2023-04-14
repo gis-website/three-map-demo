@@ -2,146 +2,13 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-13 08:38:12
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-14 08:04:57
+ * @LastEditTime: 2023-04-14 17:46:06
  * @FilePath: \three-map-demo\src\components\CircleAction.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import * as THREE from 'three'
-import * as d3 from 'd3'
-// import { lineAction } from './LineAction'
-
-const uniform = {
-  u_color: { value: new THREE.Color('#7300ff') },
-  u_tcolor: { value: new THREE.Color('#ff9800') },
-  u_r: { value: 0.25 },
-  u_length: { value: 20 }, // 扫过区域
-  u_max: { value: 30 } // 扫过最大值
-}
-const Shader = {
-  vertexShader: ` 
-  precision highp float;
-              varying vec3 vp;
-              void main(){
-              vp = position; 
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-              }
-          `,
-  fragmentShader: `
-                varying vec3 vp;
-                uniform vec3 u_color;
-                uniform vec3 u_tcolor;
-                uniform float u_r;
-                uniform float u_length;
-                uniform float u_max;
-                float getLeng(float x, float y){
-                    return  sqrt((x-0.0)*(x-0.0)+(y-0.0)*(y-0.0));
-                }
-                void main(){
-                    float uOpacity = 0.3;
-                    vec3 vColor = u_color;
-                    float uLength = getLeng(vp.x,vp.z);
-                    if ( uLength <= u_r && uLength > u_r - u_length ) {
-                        float op = sin( (u_r - uLength) / u_length ) * 0.6 + 0.3 ;
-                        uOpacity = op;
-                        if( vp.y<0.0){
-                            vColor  = u_tcolor * 0.6;
-                        }else{
-                            vColor = u_tcolor;
-                        };
-                    }
-                    gl_FragColor = vec4(vColor,uOpacity);
-                }
-            `
-//   fragmentShader: `
-//             varying vec3 vp;
-//             uniform vec3 u_color;
-//             uniform vec3 u_tcolor;
-//             uniform float u_r;
-//             void main(){
-//                 gl_FragColor = vec4(u_color,1.0 - (1.0 - vp.z)*(1.0 - vp.z));
-//             }
-//         `
-}
-
-const circleUniform = {
-  u_color: { value: new THREE.Color('#ff1e00') },
-  u_tcolor: { value: new THREE.Color('#ff9800') },
-  u_r: { value: 0.25 },
-  u_length: { value: 20 }, // 扫过区域
-  u_max: { value: 30 } // 扫过最大值
-}
-
-const circleShader = {
-  vertexShader: `
-    varying vec3 vp;
-    void main() {
-        vp = position;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0 );
-    }
-     `,
-  //   fragmentShader: `
-  //     uniform vec3 u_color;
-  //     uniform float height;
-  //     varying vec3 modelPos;
-
-  //     void main() {
-  //        gl_FragColor = vec4(u_color,(1.0 - modelPos.z)*(1.0 - modelPos.z));
-  //     }
-  //     `
-
-  fragmentShader: `
-                varying vec3 vp;
-                uniform vec3 u_color;
-                uniform vec3 u_tcolor;
-                uniform float u_r;
-                uniform float u_length;
-                uniform float u_max;
-                float getLeng(float x, float y){
-                    return  sqrt((x-0.0)*(x-0.0)+(y-0.0)*(y-0.0));
-                }
-                void main(){
-                    float uOpacity = 0.3;
-                    vec3 vColor = u_color;
-                    float uLength = getLeng(vp.x,vp.y);
-                    if ( uLength <= u_r && uLength > u_r - u_length ) {
-                        float op = sin( (u_r - uLength) / u_length ) * 0.6 + 0.3 ;
-                        uOpacity = op;
-                        if( vp.z<0.0){
-                            vColor  = u_tcolor * 0.6;
-                        }else{
-                            vColor = u_tcolor;
-                        };
-                    }
-                    gl_FragColor = vec4(vColor,uOpacity);
-                }
-            `
-}
-
-const material = new THREE.ShaderMaterial({
-  vertexShader: Shader.vertexShader,
-  fragmentShader: Shader.fragmentShader,
-  side: THREE.DoubleSide,
-  uniforms: uniform,
-  transparent: true,
-  depthWrite: false
-})
-
-const circleMaterial = new THREE.ShaderMaterial({
-  vertexShader: circleShader.vertexShader,
-  fragmentShader: circleShader.fragmentShader,
-  side: THREE.DoubleSide,
-  uniforms: circleUniform,
-  transparent: true,
-  depthWrite: false
-})
-
-// 经纬度转直角坐标
-const projection = d3
-  .geoMercator()
-  .center([118.786088, 32.033818])
-  .scale(80)
-  // .rotate(Math.PI / 4)
-  .translate([0, 0])
+import { projection } from './baseObj'
+import { gradientRampMaterial, blowMaterial, lightPillarMaterial } from './shader'
 
 export const initCircle = (jsondata: any, scene: any, map: any):void => {
   jsondata.features.forEach((elem: any) => {
@@ -182,13 +49,7 @@ export const initCircle = (jsondata: any, scene: any, map: any):void => {
           transparent: true,
           opacity: 0.6
         })
-        const material1 = new THREE.MeshBasicMaterial({
-          color: '#00ff33',
-          transparent: true,
-          opacity: 0.5
-        })
-        // const mesh = new THREE.Mesh(geometry, material)
-        const mesh = new THREE.Mesh(geometry, [material, material1])
+        const mesh = new THREE.Mesh(geometry, [material, gradientRampMaterial])
         const line = new THREE.Line(lineGeometry, lineMaterial)
         province.properties = elem.properties
         mesh.position.set(0, 0, 1)
@@ -204,10 +65,10 @@ export const initCircle = (jsondata: any, scene: any, map: any):void => {
 }
 
 export const circleAnimation = (dalte: any) => {
-  if (material) {
-    material.uniforms.u_r.value += dalte * 50
-    if (material.uniforms.u_r.value >= 300) {
-      material.uniforms.u_r.value = 20
+  if (blowMaterial) {
+    blowMaterial.uniforms.u_r.value += dalte * 50
+    if (blowMaterial.uniforms.u_r.value >= 300) {
+      blowMaterial.uniforms.u_r.value = 20
     }
   }
 }
@@ -308,7 +169,7 @@ function drawModel (
   //     opacity: modelOpacity,
   //     side: THREE.DoubleSide
   //   })
-  const mesh = new THREE.Mesh(geometry, material)
+  const mesh = new THREE.Mesh(geometry, blowMaterial)
   return mesh
 }
 
@@ -352,73 +213,89 @@ export const drawLightBar = (data: any, scene: any) => {
     sixLineGroup.add(drawSixLineLoop(x, -y, 2, i))
 
     // 绘制柱子
-    const [plane1, plane2] = drawPlane(x, -y, 2, d.value, i)
+    const plane1 = drawPlane(x, -y, 2, d.value, i)
     // mapGroup.add(plane2)
     mapGroup.add(plane1)
   })
-
-  // this.sixLineGroup = sixLineGroup;
-
-  //   mapGroup.position.y = 60 + 10.5 + 2
-  //   mapGroup.rotation.x = -Math.PI / 2
-  //   sixLineGroup.position.y = 30 + 10.5 + 2
-  //   sixLineGroup.rotation.x = -Math.PI / 2
-  //   sixPlaneGroup.position.y = 30 + 10.5 + 2
-  //   sixPlaneGroup.rotation.x = -Math.PI / 2
 
   scene.add(mapGroup)
   scene.add(sixPlaneGroup)
   scene.add(sixLineGroup)
 }
 
+// function drawPlane (x: any, y: any, z: any, value: any, i: any) {
+//   const texturesArr =
+//     new THREE.TextureLoader().setPath('/images/').load('light-cross.png')
+//   const lightPillarGeometry = new THREE.PlaneGeometry(0.5, 10)
+//   const lightPillarMaterial = new THREE.MeshBasicMaterial({
+//     color: 0xffffff,
+//     map: texturesArr,
+//     alphaMap: texturesArr,
+//     transparent: true,
+//     blending: THREE.AdditiveBlending,
+//     side: THREE.DoubleSide,
+//     depthWrite: false
+//   })
+//   const lightPillar = new THREE.Mesh(lightPillarGeometry, lightPillarMaterial)
+//   lightPillar.add(lightPillar.clone().rotateY(Math.PI / 2))
+//   const segment = 64
+//   let bottomPos = []
+//   const topPos = []
+//   const angleOffset = (Math.PI * 2) / segment
+//   for (let i = 0; i < segment; i++) {
+//     const x = Math.cos(angleOffset * i) * 0.01
+//     const z = Math.sin(angleOffset * i) * 0.01
+//     bottomPos.push(x, 0, z)
+//     topPos.push(x, 1, z)
+//   }
+//   bottomPos = bottomPos.concat(topPos)
+
+//   const face = []
+//   for (let i = 0; i < segment; i++) {
+//     if (i !== segment - 1) {
+//       face.push(i + segment + 1, i, i + segment)
+//       face.push(i, i + segment + 1, i + 1)
+//     } else {
+//       face.push(segment, i, i + segment)
+//       face.push(i, segment, 0)
+//     }
+//   }
+
+//   const geo = new THREE.BufferGeometry()
+//   geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(bottomPos), 3))
+//   geo.setIndex(new THREE.BufferAttribute(new Uint16Array(face), 1))
+
+//   const plane = new THREE.Mesh(geo, lightPillarMaterial)
+//   plane.position.set(x, y, 1)
+//   lightPillar.position.set(x, y, 3)
+//   plane.rotation.x = Math.PI / 2
+//   lightPillar.rotation.x = Math.PI / 2
+//   plane.rotation.z = Math.PI
+//   lightPillar.rotation.z = Math.PI
+//   return lightPillar
+// }
+
 function drawPlane (x: any, y: any, z: any, value: any, i: any) {
-  const texturesArr = [
-    new THREE.TextureLoader().setPath('/MilkyWay/').load('dark-s_nx.jpg'),
-    new THREE.TextureLoader().setPath('/MilkyWay/').load('dark-s_ny.jpg')
-  ]
-  const segment = 64
-  let bottomPos = []
-  const topPos = []
-  const angleOffset = (Math.PI * 2) / segment
-  for (let i = 0; i < segment; i++) {
-    const x = Math.cos(angleOffset * i) * 0.01
-    const z = Math.sin(angleOffset * i) * 0.01
-    bottomPos.push(x, 0, z)
-    topPos.push(x, 1, z)
-  }
-  bottomPos = bottomPos.concat(topPos)
+  const texturesArr =
+    new THREE.TextureLoader().setPath('/images/').load('light-cross.png')
+  const lightPillarGeometry = new THREE.PlaneGeometry(0.5, 10)
+  const lightPillarMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    map: texturesArr,
+    alphaMap: texturesArr,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+    depthWrite: false
+  })
+  const lightPillar = new THREE.Mesh(lightPillarGeometry, lightPillarMaterial)
+  lightPillar.add(lightPillar.clone().rotateY(Math.PI / 2))
 
-  const face = []
-  for (let i = 0; i < segment; i++) {
-    if (i !== segment - 1) {
-      face.push(i + segment + 1, i, i + segment)
-      face.push(i, i + segment + 1, i + 1)
-    } else {
-      face.push(segment, i, i + segment)
-      face.push(i, segment, 0)
-    }
-  }
+  lightPillar.position.set(x, y, 1)
+  lightPillar.rotation.x = Math.PI * 0.5
+  lightPillar.rotation.z = Math.PI * 0.5
 
-  const geo = new THREE.BufferGeometry()
-  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(bottomPos), 3))
-  geo.setIndex(new THREE.BufferAttribute(new Uint16Array(face), 1))
-  //   const geometry = new THREE.PlaneGeometry(10, 1 * 60)
-  //   const material = new THREE.MeshBasicMaterial({
-  //     map: texturesArr[i % 2],
-  //     depthTest: false,
-  //     transparent: true,
-  //     color: mapColorsArr[i % 2],
-  //     side: THREE.DoubleSide,
-  //     blending: THREE.AdditiveBlending
-  //   })
-  //   const plane = new THREE.Mesh(geometry, circleMaterial)
-  const plane = new THREE.Mesh(geo, circleMaterial)
-  plane.position.set(x, y, 3)
-  plane.rotation.x = Math.PI / 2
-  plane.rotation.z = Math.PI
-  const plane2 = plane.clone()
-  plane2.rotation.y = Math.PI / 2
-  return [plane, plane2]
+  return lightPillar
 }
 
 /**
