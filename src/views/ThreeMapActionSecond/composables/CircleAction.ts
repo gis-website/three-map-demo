@@ -2,15 +2,16 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-13 08:38:12
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-13 17:04:43
+ * @LastEditTime: 2023-04-14 08:04:57
  * @FilePath: \three-map-demo\src\components\CircleAction.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import * as THREE from 'three'
 import * as d3 from 'd3'
+// import { lineAction } from './LineAction'
 
 const uniform = {
-  u_color: { value: new THREE.Color('#51a7e7') },
+  u_color: { value: new THREE.Color('#7300ff') },
   u_tcolor: { value: new THREE.Color('#ff9800') },
   u_r: { value: 0.25 },
   u_length: { value: 20 }, // 扫过区域
@@ -25,41 +26,41 @@ const Shader = {
               gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
               }
           `,
-  //   fragmentShader: `
-  //               varying vec3 vp;
-  //               uniform vec3 u_color;
-  //               uniform vec3 u_tcolor;
-  //               uniform float u_r;
-  //               uniform float u_length;
-  //               uniform float u_max;
-  //               float getLeng(float x, float y){
-  //                   return  sqrt((x-0.0)*(x-0.0)+(y-0.0)*(y-0.0));
-  //               }
-  //               void main(){
-  //                   float uOpacity = 0.3;
-  //                   vec3 vColor = u_color;
-  //                   float uLength = getLeng(vp.x,vp.z);
-  //                   if ( uLength <= u_r && uLength > u_r - u_length ) {
-  //                       float op = sin( (u_r - uLength) / u_length ) * 0.6 + 0.3 ;
-  //                       uOpacity = op;
-  //                       if( vp.y<0.0){
-  //                           vColor  = u_tcolor * 0.6;
-  //                       }else{
-  //                           vColor = u_tcolor;
-  //                       };
-  //                   }
-  //                   gl_FragColor = vec4(vColor,uOpacity);
-  //               }
-  //           `
   fragmentShader: `
-            varying vec3 vp;
-            uniform vec3 u_color;
-            uniform vec3 u_tcolor;
-            uniform float u_r;
-            void main(){ 
-                gl_FragColor = vec4(u_color,1.0 - (1.0 - vp.z)*(1.0 - vp.z));
-            }
-        `
+                varying vec3 vp;
+                uniform vec3 u_color;
+                uniform vec3 u_tcolor;
+                uniform float u_r;
+                uniform float u_length;
+                uniform float u_max;
+                float getLeng(float x, float y){
+                    return  sqrt((x-0.0)*(x-0.0)+(y-0.0)*(y-0.0));
+                }
+                void main(){
+                    float uOpacity = 0.3;
+                    vec3 vColor = u_color;
+                    float uLength = getLeng(vp.x,vp.z);
+                    if ( uLength <= u_r && uLength > u_r - u_length ) {
+                        float op = sin( (u_r - uLength) / u_length ) * 0.6 + 0.3 ;
+                        uOpacity = op;
+                        if( vp.y<0.0){
+                            vColor  = u_tcolor * 0.6;
+                        }else{
+                            vColor = u_tcolor;
+                        };
+                    }
+                    gl_FragColor = vec4(vColor,uOpacity);
+                }
+            `
+//   fragmentShader: `
+//             varying vec3 vp;
+//             uniform vec3 u_color;
+//             uniform vec3 u_tcolor;
+//             uniform float u_r;
+//             void main(){
+//                 gl_FragColor = vec4(u_color,1.0 - (1.0 - vp.z)*(1.0 - vp.z));
+//             }
+//         `
 }
 
 const circleUniform = {
@@ -101,11 +102,11 @@ const circleShader = {
                 void main(){
                     float uOpacity = 0.3;
                     vec3 vColor = u_color;
-                    float uLength = getLeng(vp.x,vp.z);
+                    float uLength = getLeng(vp.x,vp.y);
                     if ( uLength <= u_r && uLength > u_r - u_length ) {
                         float op = sin( (u_r - uLength) / u_length ) * 0.6 + 0.3 ;
                         uOpacity = op;
-                        if( vp.y<0.0){
+                        if( vp.z<0.0){
                             vColor  = u_tcolor * 0.6;
                         }else{
                             vColor = u_tcolor;
@@ -142,10 +143,11 @@ const projection = d3
   // .rotate(Math.PI / 4)
   .translate([0, 0])
 
-export const initCircle = (jsondata: any, scene: any, map: any) => {
+export const initCircle = (jsondata: any, scene: any, map: any):void => {
   jsondata.features.forEach((elem: any) => {
     // 定一个省份3D对象
     const province = new THREE.Object3D()
+
     // 每个的 坐标 数组
     const coordinates = elem.geometry.coordinates
     // 循环坐标数组
@@ -175,21 +177,23 @@ export const initCircle = (jsondata: any, scene: any, map: any) => {
           bevelEnabled: false
         }
         const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-        // const material = new THREE.MeshBasicMaterial({
-        //   color: '#2defff',
-        //   transparent: true,
-        //   opacity: 0.6
-        // })
-        // const material1 = new THREE.MeshBasicMaterial({
-        //   color: '#3480C4',
-        //   transparent: true,
-        //   opacity: 0.5
-        // })
-        const mesh = new THREE.Mesh(geometry, material)
+        const material = new THREE.MeshBasicMaterial({
+          color: '#2defff',
+          transparent: true,
+          opacity: 0.6
+        })
+        const material1 = new THREE.MeshBasicMaterial({
+          color: '#00ff33',
+          transparent: true,
+          opacity: 0.5
+        })
+        // const mesh = new THREE.Mesh(geometry, material)
+        const mesh = new THREE.Mesh(geometry, [material, material1])
         const line = new THREE.Line(lineGeometry, lineMaterial)
         province.properties = elem.properties
         mesh.position.set(0, 0, 1)
         line.position.set(0, 0, 1)
+
         province.add(mesh)
         province.add(line)
         map.add(province)
@@ -298,12 +302,12 @@ function drawModel (
     depth: modelHeight, // 模型高度
     bevelEnabled: false
   })
-  const material = new THREE.MeshBasicMaterial({
-    color: modelColor,
-    transparent: true,
-    opacity: modelOpacity,
-    side: THREE.DoubleSide
-  })
+  //   const material = new THREE.MeshBasicMaterial({
+  //     color: modelColor,
+  //     transparent: true,
+  //     opacity: modelOpacity,
+  //     side: THREE.DoubleSide
+  //   })
   const mesh = new THREE.Mesh(geometry, material)
   return mesh
 }
@@ -339,12 +343,9 @@ const mapGroup = new THREE.Group()
 const sixPlaneGroup = new THREE.Group()
 const sixLineGroup = new THREE.Group()
 export const drawLightBar = (data: any, scene: any) => {
-  console.log(data)
   data.features.forEach((d: any, i: number) => {
     const lnglat = d.properties.center
-    console.log(lnglat)
     const [x, y, z] = projection(lnglat)
-    console.log('x, y, z:', x, y, z)
     // 绘制六边体
     sixPlaneGroup.add(drawSixMesh(x, -y, 2, i))
     // 绘制6边线

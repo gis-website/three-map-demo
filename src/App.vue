@@ -2,21 +2,25 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:40:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-12 09:17:05
+ * @LastEditTime: 2023-04-14 08:27:40
  * @FilePath: \three-map-demo\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <ThreeMap />
+  <ThreeMapAnimationFirst/>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import ThreeMap from './components/ThreeMap.vue'
+import ThreeStart from '@/views/ThreeStart/ThreeStart'
+import ThreeActionSecond from '@/views/ThreeMapActionSecond/ThreeMapActionSecond'
+import ThreeMapAnimationFirst from '@/views/ThreeMapAnimationFirst/ThreeMapAnimationFirst'
 
 @Options({
   components: {
-    ThreeMap
+    ThreeStart,
+    ThreeActionSecond,
+    ThreeMapAnimationFirst
   }
 })
 export default class App extends Vue {}

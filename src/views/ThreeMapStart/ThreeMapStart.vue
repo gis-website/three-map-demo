@@ -2,16 +2,16 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:45:56
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-12 09:31:56
+ * @LastEditTime: 2023-04-14 09:54:42
  * @FilePath: \three-map-demo\src\components\ThreeMap.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
-  <div id="myMap"></div>
-</template>
+    <div id="myMap"></div>
+  </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import * as THREE from 'three'
 
 const scene = new THREE.Scene()
@@ -35,8 +35,8 @@ camera.position.z = 5
 
 onMounted(() => {
   const myMap = document.getElementById('myMap')
-  myMap!.appendChild(renderer.domElement)
-  animate()
+    myMap!.appendChild(renderer.domElement)
+    animate()
 })
 
 function animate () {
@@ -47,9 +47,9 @@ function animate () {
 }
 </script>
 
-<style scoped lang="less">
-#myMap {
-  width: 100%;
-  height: 100%;
-}
-</style>
+  <style scoped lang="less">
+  #myMap {
+    width: 100%;
+    height: 100%;
+  }
+  </style>
