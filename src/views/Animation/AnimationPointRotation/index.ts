@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-15 15:25:01
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-15 17:11:29
+ * @LastEditTime: 2023-04-17 17:44:05
  * @FilePath: \three-map-demo\src\views\Animation\AnimationPointRotation\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -19,16 +19,12 @@ let angle = 0
 const color = new THREE.Color()
 for (let i = 0; i < 4; i++) {
   const x = r * Math.cos(angle)
-  console.log(x)
-
   const y = r * Math.sin(angle)
-  console.log(y)
   angle += 90
   positions.push(new THREE.Vector3(x, y, 0))
   color.setRGB(Math.random(), Math.random(), Math.random())
   colors.push(color.r, color.g, color.b)
 }
-console.log(positions.length)
 
 point.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
 

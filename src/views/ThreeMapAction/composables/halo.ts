@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-17 09:12:19
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 17:12:43
+ * @LastEditTime: 2023-04-17 17:44:44
  * @FilePath: \three-map-demo\src\views\ThreeMapAction\composables\halo.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -29,7 +29,6 @@ export const createHalo = ():any => {
   // 物体边缘发光通道
   const outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera, map.children
   )
-  console.log(map.children)
   outlinePass.selectedObjects = map.children
   outlinePass.edgeStrength = 15.0 // 边框的亮度
   outlinePass.edgeGlow = 2// 光晕[0,1]
