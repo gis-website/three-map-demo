@@ -31,7 +31,7 @@ const animate = () => {
 }
 
 // 随机颜色值
-function randomVec3Color () {
+const randomVec3Color = () => {
   return new THREE.Vector3(
     Math.random() * 0.6 + 0.4,
     Math.random() * 0.6 + 0.4,
@@ -48,7 +48,7 @@ function randomVec3Color () {
  * @param {any} position 位置
  * @return {*}
  */
-function createFlyLine (curve: any, matSetting: any, pointsNumber: any, type: any, position: any) {
+const createFlyLine = (curve: any, matSetting: any, pointsNumber: any, type: any, position: any) => {
   const points = curve.getPoints(pointsNumber)
   const geometry = new THREE.BufferGeometry().setFromPoints(points)
 
@@ -85,7 +85,7 @@ function createFlyLine (curve: any, matSetting: any, pointsNumber: any, type: an
  * @param {any} setting
  * @return {*}
  */
-function initLineMaterial (setting: any) {
+const initLineMaterial = (setting: any) => {
   const number = setting ? Number(setting.number) || 1.0 : 1.0 // 在一个路径中同时存在的个数
   const speed = setting ? Number(setting.speed) || 1.0 : 1.0 // 速度约大越快
   const length = setting ? Number(setting.length) || 0.5 : 0.5 // 单根线的长度0-1之间1代表全满
@@ -119,7 +119,7 @@ function initLineMaterial (setting: any) {
  * @param {any} yr y半径
  * @return {*}
  */
-function initCircleCurveGroup (number: any, xr: any, yr: any) {
+const initCircleCurveGroup = (number: any, xr: any, yr: any) => {
   const curves = []
 
   for (let i = 0; i < number; i++) {
