@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 09:55:02
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 17:07:46
+ * @LastEditTime: 2023-04-17 19:50:51
  * @FilePath: \three-map-demo\src\views\ThreeMapActionSecond\index.ts
  * @Description: Map
  */
@@ -14,6 +14,7 @@ import { initBaseMap, initTargetMap } from './composables/map'
 import { InitAureole } from './composables/aureole'
 import { createHalo } from './composables/halo'
 import { createVideoAnimation } from './composables/video'
+import { commonUniforms, initCircleCurveGroup, createFlyLine, randomVec3Color } from './composables/routationLine'
 
 const clock = new THREE.Clock() // 时间
 const raycaster = new THREE.Raycaster() // 射线追踪
@@ -46,6 +47,16 @@ const materials = {} as any
 export const init = async (tooltip:any) => {
   const myMapData = await getJsonNanJingData()
   const chinaData = await getJsonChinaData()
+  const curves = initCircleCurveGroup(10, 150, 150)
+
+  for (const curve of curves) {
+    createFlyLine(curve, {
+      speed: 0.2,
+      number: Math.floor(Math.random() * 9 + 1),
+      color: randomVec3Color(),
+      size: 4.0
+    }, 18000, 1, { x: 0, y: 0, z: 0 })
+  }
   initBaseMap(chinaData)
   initTargetMap(myMapData)
   InintLightCross(myMapData)
@@ -84,15 +95,19 @@ const animate = () => {
     lastPick.object.material[0].color.set(0xff0000)
     // lastPick.object.material[1].uniforms.u_color.set(0xff0000)
   }
-  control.update()
+  commonUniforms.u_time.value += 0.01
   showTip()
   const dalte = clock.getDelta()
   circleAnimation(dalte)
-
-  scene.traverse(darkenNonBloomed)
-  composer.bloomComposer.render()
-  scene.traverse(restoreMaterial)
-  composer.finalComposer.render()
+  control.update()
+  renderer.render(scene, camera)
+  if (composer) {
+    composer.render()
+  }
+  // scene.traverse(darkenNonBloomed)
+  // composer.bloomComposer.render()
+  // scene.traverse(restoreMaterial)
+  // composer.finalComposer.render()
 }
 
 const showTip = () => {
