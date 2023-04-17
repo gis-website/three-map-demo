@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 const blowuniform = {
-  u_color: { value: new THREE.Color('#7300ff') },
+  u_color: { value: new THREE.Color('#00ff51') },
   u_tcolor: { value: new THREE.Color('#006dff') },
   u_r: { value: 0.25 },
   u_length: { value: 20 }, // 扫过区域
