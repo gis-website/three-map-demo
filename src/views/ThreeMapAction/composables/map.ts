@@ -1,7 +1,7 @@
 
 import { gradientRampMaterial, blowMaterial } from './shader'
 import * as THREE from 'three'
-import { projection } from './baseObj'
+import { projection, scene, map } from './baseObj'
 
 /**
  * @description: 初始化目标地图
@@ -9,9 +9,7 @@ import { projection } from './baseObj'
  * @param {any} scene 场景对象
  * @return {*}
  */
-export const initTargetMap = (jsondata: any, scene: any):void => {
-  const map = new THREE.Object3D() // map carrier
-
+export const initTargetMap = (jsondata: any):void => {
   jsondata.features.forEach((elem: any) => {
     // 定一个省份3D对象
     const province = new THREE.Object3D()
@@ -71,10 +69,7 @@ export const initTargetMap = (jsondata: any, scene: any):void => {
  * @param {any} scene 场景对象
  * @return {*}
  */
-export const initBaseMap = (mapData: any, scene: any) => {
-  // 绘制地图模型
-  const group = new THREE.Group()
-
+export const initBaseMap = (mapData: any) => {
   mapData.features.forEach((elem: any) => {
     // 定一个省份3D对象
     const province = new THREE.Object3D()
@@ -116,10 +111,10 @@ export const initBaseMap = (mapData: any, scene: any) => {
         mesh.position.set(0, 0, 0)
         province.add(mesh)
         province.add(line)
-        group.add(province)
+        map.add(province)
       })
     })
   })
 
-  scene.add(group)
+  scene.add(map)
 }

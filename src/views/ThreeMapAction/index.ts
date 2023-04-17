@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 09:55:02
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 15:11:31
+ * @LastEditTime: 2023-04-17 16:53:48
  * @FilePath: \three-map-demo\src\views\ThreeMapActionSecond\index.ts
  * @Description: Map
  */
@@ -46,9 +46,9 @@ const materials = {} as any
 export const init = async (tooltip:any) => {
   const myMapData = await getJsonNanJingData()
   const chinaData = await getJsonChinaData()
-  initBaseMap(chinaData, scene)
-  initTargetMap(myMapData, scene)
-  InintLightCross(myMapData, scene)
+  initBaseMap(chinaData)
+  initTargetMap(myMapData)
+  InintLightCross(myMapData)
   InitAureole(myMapData)
   createVideoAnimation()
   composer = createHalo()

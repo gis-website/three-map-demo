@@ -2,12 +2,12 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 09:55:02
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-15 14:26:08
+ * @LastEditTime: 2023-04-17 16:54:15
  * @FilePath: \three-map-demo\src\views\ThreeMapActionSecond\composables\CircleAction.ts
  * @Description:
  */
 import * as THREE from 'three'
-import { projection } from './baseObj'
+import { projection, scene } from './baseObj'
 import { blowMaterial } from './shader'
 
 /**
@@ -34,7 +34,7 @@ const sixLineGroup = new THREE.Group()
  * @param {any} scene sceen object
  * @return {*}
  */
-export const InintLightCross = (mapData: any, scene: any) => {
+export const InintLightCross = (mapData: any) => {
   mapData.features.forEach((d: any, i: number) => {
     const lnglat = d.properties.center
     const [x, y] = projection(lnglat)
