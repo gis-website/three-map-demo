@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 09:55:02
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 19:50:51
+ * @LastEditTime: 2023-04-17 20:29:56
  * @FilePath: \three-map-demo\src\views\ThreeMapActionSecond\index.ts
  * @Description: Map
  */
@@ -15,6 +15,7 @@ import { InitAureole } from './composables/aureole'
 import { createHalo } from './composables/halo'
 import { createVideoAnimation } from './composables/video'
 import { commonUniforms, initCircleCurveGroup, createFlyLine, randomVec3Color } from './composables/routationLine'
+import { stats, gui } from './composables/datGUI'
 
 const clock = new THREE.Clock() // 时间
 const raycaster = new THREE.Raycaster() // 射线追踪
@@ -35,6 +36,49 @@ renderer.useLegacyLights = true
 renderer.toneMapping = THREE.ACESFilmicToneMapping
 renderer.toneMappingExposure = 1
 renderer.sortObjects = true
+
+const params = {
+  exposure: 1,
+  bloomStrength: 0.35,
+  bloomThreshold: 0,
+  bloomRadius: 0
+}
+
+const colorObj = {
+  color: '#00ff51',
+  tcolor: '#006dff'
+}
+
+const guiAdd = gui.addFolder('基础')
+guiAdd.add(params, 'exposure', 0.1, 2).onChange((value: any) => {
+  renderer.toneMappingExposure = Math.pow(value, 4.0)
+})
+
+// guiAdd.add(params, 'bloomThreshold', 0.0, 1.0).onChange((value: any) => {
+//   bloomPass.threshold = Number(value)
+// })
+// guiAdd.add(params, 'bloomStrength', 0.0, 3.0).onChange((value: any) => {
+//   bloomPass.strength = Number(value)
+// })
+// guiAdd.add(params, 'bloomRadius', 0.0, 1.0).step(0.01).onChange((value: any) => {
+//   bloomPass.radius = Number(value)
+// })
+guiAdd.addColor(colorObj, 'color').onChange((value: any) => {
+  const element = scene.children.find((elem: any) => elem.name === 'china')
+  const result = element.children.filter((elem: any) => elem.name === 'china')
+  result.forEach((item:any) => {
+    const target = item.children.find((elem: any) => elem.name === 'china')
+    target.material.uniforms.u_color.value = new THREE.Color(value)
+  })
+})
+guiAdd.addColor(colorObj, 'tcolor').onChange((value: any) => {
+  const element = scene.children.find((elem: any) => elem.name === 'china')
+  const result = element.children.filter((elem: any) => elem.name === 'china')
+  result.forEach((item:any) => {
+    const target = item.children.find((elem: any) => elem.name === 'china')
+    target.material.uniforms.u_tcolor.value = new THREE.Color(value)
+  })
+})
 
 let lastPick:any
 let tip: any
@@ -77,9 +121,8 @@ export const init = async (tooltip:any) => {
 
 const animate = () => {
   requestAnimationFrame(animate)
+  stats.begin()
   // 通过摄像机和鼠标位置更新射线
-  // renderer.clear()
-  // camera.layers.set(1)
   raycaster.setFromCamera(mouse, camera)
   // 算出射线 与当场景相交的对象有那些
   const intersects = raycaster.intersectObjects(scene.children, true)
@@ -104,6 +147,7 @@ const animate = () => {
   if (composer) {
     composer.render()
   }
+  stats.end()
   // scene.traverse(darkenNonBloomed)
   // composer.bloomComposer.render()
   // scene.traverse(restoreMaterial)

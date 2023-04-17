@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 08:02:25
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 09:49:07
+ * @LastEditTime: 2023-04-17 20:28:37
  * @FilePath: \three-map-demo\src\views\ThreeMapActionSecond\ThreeMapActionSecond.vue
  * @Description: three.js add animation
 -->
@@ -17,12 +17,13 @@
 import { onMounted, ref } from 'vue'
 import { init } from './index'
 import { renderer } from './composables/baseObj'
-
+import { stats } from './composables/datGUI'
 const myMap = ref()
 const tooltip = ref()
 
 onMounted(() => {
   myMap.value.appendChild(renderer.domElement)
+  myMap.value.appendChild(stats.dom)
   init(tooltip.value)
 })
 

@@ -109,12 +109,14 @@ export const initBaseMap = (mapData: any) => {
         const line = new THREE.Line(lineGeometry, lineMaterial)
         province.properties = elem.properties
         mesh.position.set(0, 0, 0)
+        mesh.name = 'china'
+        province.name = 'china'
         province.add(mesh)
         province.add(line)
         map.add(province)
       })
     })
   })
-
+  map.name = 'china'
   scene.add(map)
 }
