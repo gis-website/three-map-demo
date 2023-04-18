@@ -51,7 +51,6 @@ loader.load('./models/aifeier.obj', function (obj: any) {
 
 export const initRender = () => {
   composer = loadBloomPass()
-  setupScene()
   loadModel()
   animate()
 }
@@ -76,36 +75,5 @@ function restoreMaterial (obj:any) {
   if (materials[obj.uuid]) {
     obj.material = materials[obj.uuid]
     delete materials[obj.uuid]
-  }
-}
-
-function setupScene () {
-  scene.traverse(disposeMaterial)
-  scene.children.length = 0
-
-  const geometry = new THREE.IcosahedronGeometry(1, 15)
-
-  for (let i = 0; i < 50; i++) {
-    const color = new THREE.Color()
-    color.setHSL(Math.random(), 0.7, Math.random() * 0.2 + 0.05)
-
-    const material = new THREE.MeshBasicMaterial({ color: color })
-    const sphere = new THREE.Mesh(geometry, material)
-    sphere.position.x = Math.random() * 10 - 5
-    sphere.position.y = Math.random() * 10 - 5
-    sphere.position.z = Math.random() * 10 - 5
-    sphere.position.normalize().multiplyScalar(Math.random() * 4.0 + 2.0)
-    sphere.scale.setScalar(Math.random() * Math.random() + 0.5)
-    scene.add(sphere)
-
-    if (Math.random() < 0.25) sphere.layers.enable(BLOOM_SCENE)
-  }
-
-  animate()
-}
-
-function disposeMaterial (obj: any) {
-  if (obj.material) {
-    obj.material.dispose()
   }
 }

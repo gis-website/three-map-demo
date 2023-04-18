@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:40:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-18 13:35:20
+ * @LastEditTime: 2023-04-18 14:29:08
  * @FilePath: \three-map-demo\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -11,10 +11,11 @@
   <!-- <ThreeMapAction/> -->
   <!-- <AnimationPointRotation/> -->
   <!-- <AnimationVideo/> -->
-  <AnimationHalo/>
+  <!-- <AnimationHalo/> -->
   <!-- <AnimationRotationLine/> -->
   <!-- <AnimationGaugePoint/> -->
   <!-- <AnimationAddModel/> -->
+  <AnimationPointSky/>
 </template>
 
 <script lang="ts">
@@ -27,6 +28,7 @@ import AnimationHalo from './views/Animation/AnimationHalo/AnimationHalo'
 import AnimationRotationLine from './views/Animation/AnimationRotationLine/AnimationRotationLine'
 import AnimationGaugePoint from './views/Animation/AnimationGaugePoint/AnimationGaugePoint'
 import AnimationAddModel from './views/Animation/AnimationAddModel/AnimationAddModel'
+import AnimationPointSky from './views/Animation/AnimationPointSky/AnimationPointSky'
 
 @Options({
   components: {
@@ -37,7 +39,8 @@ import AnimationAddModel from './views/Animation/AnimationAddModel/AnimationAddM
     AnimationHalo,
     AnimationRotationLine,
     AnimationGaugePoint,
-    AnimationAddModel
+    AnimationAddModel,
+    AnimationPointSky
   }
 })
 export default class App extends Vue {}
