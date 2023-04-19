@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:40:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-18 15:09:33
+ * @LastEditTime: 2023-04-19 09:26:49
  * @FilePath: \three-map-demo\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -17,7 +17,9 @@
   <!-- <AnimationAddModel/> -->
   <!-- <AnimationPointSky/> -->
   <!-- <AnimationProtectiveCover/> -->
-  <AnimationCylinderDiffusionRipple/>
+  <!-- <AnimationCylinderDiffusionRipple/> -->
+  <!-- <AnimationPlane/> -->
+  <ThreeCustomFirstAction/>
 </template>
 
 <script lang="ts">
@@ -33,6 +35,8 @@ import AnimationAddModel from './views/Animation/AnimationAddModel/AnimationAddM
 import AnimationPointSky from './views/Animation/AnimationPointSky/AnimationPointSky'
 import AnimationProtectiveCover from './views/Animation/AnimationProtectiveCover/AnimationProtectiveCover'
 import AnimationCylinderDiffusionRipple from './views/Animation/AnimationCylinderDiffusionRipple/AnimationCylinderDiffusionRipple'
+import AnimationPlane from './views/Animation/AnimationPlane/AnimationPlane'
+import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFirstAction'
 
 @Options({
   components: {
@@ -46,7 +50,9 @@ import AnimationCylinderDiffusionRipple from './views/Animation/AnimationCylinde
     AnimationAddModel,
     AnimationPointSky,
     AnimationProtectiveCover,
-    AnimationCylinderDiffusionRipple
+    AnimationCylinderDiffusionRipple,
+    AnimationPlane,
+    ThreeCustomFirstAction
   }
 })
 export default class App extends Vue {}

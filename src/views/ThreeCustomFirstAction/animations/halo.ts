@@ -1,9 +1,9 @@
-import { scene, camera, renderer } from './baseObj'
+import { scene, camera, renderer } from '../base/baseObj'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
-import { shader } from './shader'
+import { haloShader } from '../base/shader'
 import * as THREE from 'three'
 const params = {
   exposure: 1,
@@ -27,8 +27,8 @@ export const createHalo = ():any => {
         baseTexture: { value: null },
         bloomTexture: { value: bloomComposer.renderTarget2.texture }
       },
-      vertexShader: shader.vertexShader,
-      fragmentShader: shader.fragmentShader,
+      vertexShader: haloShader.vertexShader,
+      fragmentShader: haloShader.fragmentShader,
       defines: {}
     }), 'baseTexture'
   )

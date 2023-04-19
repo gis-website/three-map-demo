@@ -10,7 +10,7 @@ import * as THREE from 'three'
 import { scene } from './baseObj'
 import gsap from 'gsap'
 
-export const createHighlight = ():any => {
+export const createAureole = ():any => {
   const circlePlane = new THREE.PlaneGeometry(1, 1)
   const circleTexture = new THREE.TextureLoader().load('./images/label.png')
   const circleMaterial = new THREE.MeshBasicMaterial({

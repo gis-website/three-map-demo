@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 09:55:02
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 20:29:56
+ * @LastEditTime: 2023-04-18 20:29:18
  * @FilePath: \three-map-demo\src\views\ThreeMapActionSecond\index.ts
  * @Description: Map
  */
@@ -143,15 +143,15 @@ const animate = () => {
   const dalte = clock.getDelta()
   circleAnimation(dalte)
   control.update()
-  renderer.render(scene, camera)
-  if (composer) {
-    composer.render()
-  }
+  // renderer.render(scene, camera)
+  // if (composer) {
+  //   composer.render()
+  // }
+  scene.traverse(darkenNonBloomed)
+  composer.bloomComposer.render()
+  scene.traverse(restoreMaterial)
+  composer.finalComposer.render()
   stats.end()
-  // scene.traverse(darkenNonBloomed)
-  // composer.bloomComposer.render()
-  // scene.traverse(restoreMaterial)
-  // composer.finalComposer.render()
 }
 
 const showTip = () => {
@@ -174,9 +174,6 @@ function darkenNonBloomed (obj:any) {
   if (obj.isMesh && bloomLayer.test(obj.layers) === false) {
     materials[obj.uuid] = obj.material
     obj.material = darkMaterial
-    if (obj.name === 'video') {
-      obj.layers.toggle(BLOOM_SCENE)
-    }
   }
 }
 
