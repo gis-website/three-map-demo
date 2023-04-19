@@ -2,6 +2,8 @@
 import { gradientRampMaterial, blowMaterial } from '../base/shader'
 import * as THREE from 'three'
 import { projection, scene, map } from '../base/baseObj'
+import { FontLoader } from 'three/addons/loaders/FontLoader.js'
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
 
 /**
  * @description: 初始化目标地图
@@ -128,4 +130,74 @@ export const createBaseMap = (mapData: any) => {
   // map.scale.y = 0.5 * 0.5
   // map.scale.z = 0.5 * 0.5
   scene.add(map)
+}
+
+/**
+ * @description: 初始化底图
+ * @param {any} mapData 地图数据
+ * @param {any} scene 场景对象
+ * @return {*}
+ */
+export const displayName = (mapData: any) => {
+  const group = new THREE.Group()
+  const loader = new FontLoader()
+
+  let preText:any // 上一个字体
+
+  loader.load('fonts/custom_Regular.json', function (font:any) {
+    mapData.features.forEach((d: any, i: number) => {
+      const lnglat = d.properties.center
+
+      if (lnglat === undefined) {
+        return
+      }
+      const color = 0xffffff
+      const [x, y] = projection(lnglat)
+      const matLite = new THREE.MeshBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 0.4,
+        side: THREE.DoubleSide
+      })
+
+      const shapes = font.generateShapes(d.properties.name, 1)
+      console.log(shapes)
+      const geometry = new THREE.ShapeGeometry(shapes)
+
+      geometry.computeBoundingBox()
+      console.log(geometry.boundingBox)
+
+      // 取中
+      const { min, max } = geometry.boundingBox
+
+      if (preText === undefined) {
+        preText = geometry.boundingBox
+      } else {
+        const preMinX = preText.min.x
+        const preMaxX = preText.max.x
+        const preMinY = preText.min.y
+        const preMaxY = preText.max.y
+        const preWidth = max.x - min.x // 矩形宽度
+        const preHeight = max.y - min.y // 矩形高度
+
+        // if ((preMinX <= min.x && min.x <= preMaxX) && (preMinY <= min.y && min.y <= preMaxY) && (max.x <= preMaxX && max.x <= preMaxX) && (preMinY <= max.y && max.y <= preMaxY)) {
+
+        // }
+      }
+
+      const centerX = min.x + max.x / 2
+      const centerY = min.y + max.y / 2
+      const width = max.x - min.x // 矩形宽度
+      const height = max.y - min.y // 矩形高度
+
+      const text = new THREE.Mesh(geometry, matLite)
+      text.position.x = (x - centerX)
+      text.position.y = -(y - centerY + height)
+      text.position.z = 2.3
+      group.add(text)
+    })
+  })
+
+  group.rotation.x = -Math.PI * 0.5 * 0.5
+  scene.add(group)
 }

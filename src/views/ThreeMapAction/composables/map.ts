@@ -100,12 +100,16 @@ export const initBaseMap = (mapData: any) => {
         }
         lineGeometry.setFromPoints(points)
         const extrudeSettings = {
-          depth: 0,
+          depth: 2,
           bevelEnabled: false
         }
         const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
-
-        const mesh = new THREE.Mesh(geometry, blowMaterial)
+        const material = new THREE.MeshBasicMaterial({
+          color: '#2defff',
+          transparent: true,
+          opacity: 0.6
+        })
+        const mesh = new THREE.Mesh(geometry, [material, blowMaterial])
         const line = new THREE.Line(lineGeometry, lineMaterial)
         province.properties = elem.properties
         mesh.position.set(0, 0, 0)
@@ -118,5 +122,6 @@ export const initBaseMap = (mapData: any) => {
     })
   })
   map.name = 'china'
+  map.rotation.x = -Math.PI * 0.5 * 0.5
   scene.add(map)
 }

@@ -42,7 +42,7 @@ export const createLightCross = (mapData: any) => {
 const drawPlane = (x: any, y: any, z: any) => {
   const textures =
       new THREE.TextureLoader().setPath('/images/').load('light-cross.png')
-  const lightPillarGeometry = new THREE.PlaneGeometry(0.1, 1)
+  const lightPillarGeometry = new THREE.PlaneGeometry(1, 5)
   const lightPillarMaterial = new THREE.MeshBasicMaterial({
     color: 0xffffff,
     map: textures,

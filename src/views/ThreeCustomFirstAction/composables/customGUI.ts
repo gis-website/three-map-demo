@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 19:09:43
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-18 19:12:31
+ * @LastEditTime: 2023-04-19 11:41:06
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\composables\customGUI.ts
  * @Description: gui service
  */
@@ -18,7 +18,7 @@ const params = {
 }
 
 const colorObj = {
-  color: '#00ff51',
+  color: '#826c00',
   tcolor: '#006dff'
 }
 

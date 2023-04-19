@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 15:02:22
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-19 10:21:26
+ * @LastEditTime: 2023-04-19 11:38:11
  * @FilePath: \three-map-demo\src\views\Animation\AnimationCylinderDiffusionRipple\composables\cylinderDiffusionRipple.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -37,7 +37,7 @@ export const create3DCircle = (r:any) => {
   let s = 0
   let p = 0
 
-  function render () {
+  const render = () => {
     // animation
     if (s > 160) {
       s = 0
@@ -54,16 +54,15 @@ export const create3DCircle = (r:any) => {
 
 // 圆柱体扩散
 export const create3DCylinder = (r:any, src:any, type:any) => {
-  const geometry = new THREE.CylinderGeometry(r, r, 6, 64)
+  const geometry = new THREE.CylinderGeometry(r, r, 6, 64, 1, true, 0, Math.PI * 2)
   const texture = new THREE.TextureLoader().load(src)
-  const circle = new THREE.Mesh(geometry, [
-    new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      side: THREE.DoubleSide,
-      transparent: true,
-      map: texture
-    })
-  ])
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    map: texture
+  })
+  const circle = new THREE.Mesh(geometry, material)
 
   circle.layers.enable(1)
   circle.position.set(0, -20, 0)
@@ -74,7 +73,7 @@ export const create3DCylinder = (r:any, src:any, type:any) => {
   let s = 0
   let p = 0
 
-  function render () {
+  const render = () => {
     // animation
     if (s > 160) {
       s = 0
@@ -82,7 +81,7 @@ export const create3DCylinder = (r:any, src:any, type:any) => {
     }
     if (!type) {
       circle.scale.set(1 + s / 6, 1, 1 + s / 6)
-      circle.material[0].opacity = p / 160
+      circle.material.opacity = p / 160
       s++
       p--
     }

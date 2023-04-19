@@ -49,7 +49,6 @@ export const loadBloomPass = ():any => {
   finalComposer.addPass(finalPass)
   bloomComposer.addPass(renderScene)
   bloomComposer.addPass(bloomPass)
-  console.log(bloomComposer.renderTarget2.texture)
 
   return { bloomComposer, finalComposer }
 }

@@ -10,7 +10,6 @@ import gsap from 'gsap'
 export const createAureole = (data:any): void => {
   const group = new THREE.Group()
   data.features.forEach((d: any) => {
-    console.log(d.properties.center)
     const lnglat = d.properties.center
 
     if (lnglat === undefined) {
