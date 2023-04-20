@@ -2,24 +2,22 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 08:24:13
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-14 15:45:42
+ * @LastEditTime: 2023-04-20 09:30:32
  * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\index.ts
  * @Description: main logic
  */
 import * as THREE from 'three'
 import { gradientRampMaterial } from './composables/shader'
 import { projection, map, scene, axes, camera, renderer, control } from './composables/baseObj'
-import { createOutLine } from './composables/outline'
+import { createOutLine, mouseClick } from './composables/outline'
 
 scene.add(camera)
-scene.add(axes)
+// scene.add(axes)
 
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-let composer: any
-
 export const initRender = () => {
-  composer = createOutLine()
+  window.addEventListener('pointerdown', mouseClick)
   animate()
 }
 
@@ -28,11 +26,6 @@ const animate = () => {
 
   control.update()
   renderer.render(scene, camera)
-
-  // drawing outLine
-  if (composer) {
-    composer.render()
-  }
 }
 
 /**

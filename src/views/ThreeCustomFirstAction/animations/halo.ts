@@ -5,6 +5,9 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { haloShader } from '../base/shader'
 import * as THREE from 'three'
+import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js'
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
+
 const params = {
   exposure: 1,
   bloomStrength: 2,
@@ -12,6 +15,9 @@ const params = {
   bloomRadius: 0,
   scene: 'Scene with Glow'
 }
+
+let outlinePass: any // 存储当前创建的pass，用于后续删除
+
 export const createHalo = ():any => {
   const bloomComposer = new EffectComposer(renderer)
   const renderScene = new RenderPass(scene, camera)
@@ -20,6 +26,22 @@ export const createHalo = ():any => {
   bloomPass.threshold = params.bloomThreshold
   bloomPass.strength = params.bloomStrength
   bloomPass.radius = params.bloomRadius
+
+  // 物体边缘发光通道
+  outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), scene, camera)
+  outlinePass.edgeStrength = 15.0 // 边框的亮度
+  outlinePass.edgeGlow = 2// 光晕[0,1]
+  outlinePass.usePatternTexture = false // 是否使用父级的材质
+  outlinePass.edgeThickness = 1.0 // 边框宽度
+  outlinePass.downSampleRatio = 1 // 边框弯曲度
+  outlinePass.pulsePeriod = 5 // 呼吸闪烁的速度
+  outlinePass.visibleEdgeColor.set('#7300ff') // 呼吸显示的颜色
+  outlinePass.hiddenEdgeColor = new THREE.Color(0, 0, 0) // 呼吸消失的颜色
+  outlinePass.clear = true
+  // 自定义的着色器通道 作为参数
+  const effectFXAA = new ShaderPass(FXAAShader)
+  effectFXAA.uniforms.resolution.value.set(1 / window.innerWidth, 1 / window.innerHeight)
+
   // 自定义的着色器通道 作为参数
   const finalPass = new ShaderPass(
     new THREE.ShaderMaterial({
@@ -39,6 +61,15 @@ export const createHalo = ():any => {
   finalComposer.addPass(finalPass)
   bloomComposer.addPass(renderScene)
   bloomComposer.addPass(bloomPass)
+  bloomComposer.addPass(outlinePass)
+  bloomComposer.addPass(effectFXAA)
 
   return { bloomComposer, finalComposer }
+}
+
+export const createOutLine = (obj:any):void => {
+  console.log(outlinePass.selectedObjects)
+  console.log(obj)
+
+  outlinePass.selectedObjects = obj
 }
