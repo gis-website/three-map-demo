@@ -2,13 +2,14 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 19:20:01
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-20 10:43:29
+ * @LastEditTime: 2023-04-20 13:50:15
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\composables\listenEvent.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { createOutLine } from '../animations/halo'
 import { mouse, raycaster, camera, scene } from '../base/baseObj'
 import { ref } from 'vue'
+import { showGaugePoint } from './loadGaugePoint'
 
 const lastPick = ref()
 
@@ -38,6 +39,7 @@ export const pointerMoveEvent = (tooltip:any): void => {
       lastPick.value.object.material[0].color.set(0xff0000)
       // lastPick.object.material[1].uniforms.u_color.set(0xff0000)
       createOutLine([lastPick.value.object.parent])
+      showGaugePoint(lastPick.value)
     } else {
       createOutLine([])
     }

@@ -20,7 +20,8 @@
   <!-- <AnimationCylinderDiffusionRipple/> -->
   <!-- <AnimationPlane/> -->
   <!-- <AnimationOutline/> -->
-  <ThreeCustomFirstAction/>
+  <AnimationPointFloatUp/>
+  <!-- <ThreeCustomFirstAction/> -->
 </template>
 
 <script lang="ts">
@@ -38,6 +39,7 @@ import AnimationProtectiveCover from './views/Animation/AnimationProtectiveCover
 import AnimationCylinderDiffusionRipple from './views/Animation/AnimationCylinderDiffusionRipple/AnimationCylinderDiffusionRipple'
 import AnimationPlane from './views/Animation/AnimationPlane/AnimationPlane'
 import AnimationOutline from './views/Animation/AnimationOutline/AnimationOutline'
+import AnimationPointFloatUp from './views/Animation/AnimationPointFloatUp/AnimationPointFloatUp'
 import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFirstAction'
 
 @Options({
@@ -55,6 +57,7 @@ import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFi
     AnimationCylinderDiffusionRipple,
     AnimationPlane,
     AnimationOutline,
+    AnimationPointFloatUp,
     ThreeCustomFirstAction
   }
 })

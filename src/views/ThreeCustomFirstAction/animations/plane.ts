@@ -26,13 +26,15 @@ export const createLightCross = (mapData: any) => {
     sixLineGroup.add(drawSixLineLoop(x, -y, 2, i))
 
     // 绘制柱子
-    const plane1 = drawPlane(x, -y, 2.5)
-
-    mapGroup.add(plane1)
+    const plane = drawPlane(x, -y, 3.5)
+    plane.properties = d.properties
+    mapGroup.add(plane)
   })
   mapGroup.rotation.x = -Math.PI * 0.5 * 0.5
   sixPlaneGroup.rotation.x = -Math.PI * 0.5 * 0.5
   sixLineGroup.rotation.x = -Math.PI * 0.5 * 0.5
+
+  mapGroup.name = 'lightCross'
 
   scene.add(mapGroup)
   scene.add(sixPlaneGroup)

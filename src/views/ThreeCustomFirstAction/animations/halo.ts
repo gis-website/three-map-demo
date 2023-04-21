@@ -68,8 +68,5 @@ export const createHalo = ():any => {
 }
 
 export const createOutLine = (obj:any):void => {
-  console.log(outlinePass.selectedObjects)
-  console.log(obj)
-
   outlinePass.selectedObjects = obj
 }
