@@ -2,9 +2,9 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:40:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-21 08:52:04
+ * @LastEditTime: 2023-04-21 10:45:49
  * @FilePath: \three-map-demo\src\App.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEat
 -->
 <template>
   <!-- <AnimationAureole/> -->
@@ -21,7 +21,8 @@
   <!-- <AnimationPlane/> -->
   <!-- <AnimationOutline/> -->
   <!-- <AnimationPointFloatUp/> -->
-  <ThreeCustomFirstAction/>
+  <AnimationPowerShade/>
+  <!-- <ThreeCustomFirstAction/> -->
 </template>
 
 <script lang="ts">
@@ -40,6 +41,7 @@ import AnimationCylinderDiffusionRipple from './views/Animation/AnimationCylinde
 import AnimationPlane from './views/Animation/AnimationPlane/AnimationPlane'
 import AnimationOutline from './views/Animation/AnimationOutline/AnimationOutline'
 import AnimationPointFloatUp from './views/Animation/AnimationPointFloatUp/AnimationPointFloatUp'
+import AnimationPowerShade from './views/Animation/AnimationPowerShade/AnimationPowerShade'
 import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFirstAction'
 
 @Options({
@@ -58,6 +60,7 @@ import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFi
     AnimationPlane,
     AnimationOutline,
     AnimationPointFloatUp,
+    AnimationPowerShade,
     ThreeCustomFirstAction
   }
 })
