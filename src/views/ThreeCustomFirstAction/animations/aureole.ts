@@ -1,3 +1,11 @@
+/*
+ * @Author: TQtong 2733707740@qq.com
+ * @Date: 2023-04-19 08:38:01
+ * @LastEditors: TQtong 2733707740@qq.com
+ * @LastEditTime: 2023-04-21 09:44:12
+ * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\animations\aureole.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import * as THREE from 'three'
 import { scene, projection } from '../base/baseObj'
 import gsap from 'gsap'
@@ -30,7 +38,7 @@ export const createAureole = (data:any): void => {
     })
 
     const circleMesh = new THREE.Mesh(circlePlane, circleMaterial)
-    circleMesh.position.set(x, -y, 2)
+    circleMesh.position.set(x, -y, 2.5)
 
     group.add(circleMesh)
 

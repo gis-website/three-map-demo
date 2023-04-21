@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 
 const blowuniform = {
-  u_color: { value: new THREE.Color('#00ff51') },
-  u_tcolor: { value: new THREE.Color('#006dff') },
+  u_color: { value: new THREE.Color('#00abad') },
+  u_tcolor: { value: new THREE.Color('#c8ff00') },
   u_r: { value: 0.25 },
   u_length: { value: 20 }, // 扫过区域
   u_max: { value: 30 } // 扫过最大值

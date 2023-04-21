@@ -35,7 +35,7 @@ export const createHalo = ():any => {
   outlinePass.edgeThickness = 1.0 // 边框宽度
   outlinePass.downSampleRatio = 1 // 边框弯曲度
   outlinePass.pulsePeriod = 5 // 呼吸闪烁的速度
-  outlinePass.visibleEdgeColor.set('#7300ff') // 呼吸显示的颜色
+  outlinePass.visibleEdgeColor.set('#aeff00') // 呼吸显示的颜色
   outlinePass.hiddenEdgeColor = new THREE.Color(0, 0, 0) // 呼吸消失的颜色
   outlinePass.clear = true
   // 自定义的着色器通道 作为参数

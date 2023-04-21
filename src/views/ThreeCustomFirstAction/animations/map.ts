@@ -55,7 +55,6 @@ export const createTargetMap = (jsondata: any):void => {
         const line = new THREE.Line(lineGeometry, lineMaterial)
         province.properties = elem.properties
         mesh.position.set(0, 0, 0)
-
         province.add(mesh)
         province.add(line)
         map.add(province)
@@ -85,7 +84,7 @@ export const createBaseMap = (mapData: any) => {
         const lineMaterial = new THREE.LineBasicMaterial({
           side: THREE.DoubleSide,
           depthTest: false,
-          color: '#ccc',
+          color: '#007eff',
           transparent: true,
           opacity: 1
         })
@@ -107,7 +106,7 @@ export const createBaseMap = (mapData: any) => {
         }
         const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
         const material = new THREE.MeshBasicMaterial({
-          color: '#826c00',
+          color: '#002642',
           transparent: true,
           opacity: 1
         })
@@ -116,6 +115,7 @@ export const createBaseMap = (mapData: any) => {
         province.properties = elem.properties
         mesh.position.set(0, 0, 0)
         line.position.set(0, 0, 2)
+        line.layers.enable(1)
         mesh.name = 'china'
         province.name = 'china'
         province.add(mesh)
