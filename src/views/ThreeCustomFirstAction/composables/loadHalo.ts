@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 19:52:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-21 09:30:33
+ * @LastEditTime: 2023-04-21 15:08:04
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\composables\loadHalo.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -32,7 +32,7 @@ export const loadHalo = (): void => {
 }
 
 const darkenNonBloomed = (obj:any) => {
-  if ((obj.isMesh || obj.isLine) && bloomLayer.test(obj.layers) === false) {
+  if ((obj.isMesh || obj.isLine || obj.isObject3D || obj.isTexture) && bloomLayer.test(obj.layers) === false) {
     materials[obj.uuid] = obj.material
     obj.material = darkMaterial
   }

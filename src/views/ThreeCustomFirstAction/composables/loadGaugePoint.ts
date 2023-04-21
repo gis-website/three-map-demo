@@ -18,9 +18,6 @@ export const showGaugePoint = (obj:any): void => {
   const groupPlane = scene.getObjectByName('lightCross')
   const groupGaugePoint = scene.getObjectByName('gaugePoint')
 
-  console.log(obj)
-  console.log(groupPlane)
-  console.log(obj.object.parent.properties.name)
   plane = groupPlane.children.find((item:any) => item.properties.name === obj.object.parent.properties.name)
 
   gaugePoint = groupGaugePoint.children.find((item:any) => item.properties.name === obj.object.parent.properties.name)
@@ -31,5 +28,15 @@ export const showGaugePoint = (obj:any): void => {
 
   if (gaugePoint !== undefined) {
     gaugePoint.visible = true
+  }
+}
+
+export const visibleGaugePoint = (): void => {
+  if (plane !== undefined) {
+    plane.visible = true
+  }
+
+  if (gaugePoint !== undefined) {
+    gaugePoint.visible = false
   }
 }
