@@ -1,5 +1,5 @@
 import { createGaugePoint } from '../animations/gaugePoint'
-import { scene, projection } from '../base/baseObj'
+import { scene, projection } from '@/base/baseObj'
 
 let plane:any
 let gaugePoint:any

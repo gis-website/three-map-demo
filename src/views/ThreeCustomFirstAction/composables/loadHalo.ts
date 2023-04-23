@@ -8,7 +8,7 @@
  */
 import { createHalo } from '../animations/halo'
 import * as THREE from 'three'
-import { scene } from '../base/baseObj'
+import { scene } from '@/base/baseObj'
 
 const ENTIRE_SCENE = 0
 const BLOOM_SCENE = 1

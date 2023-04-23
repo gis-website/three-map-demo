@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { scene } from '../base/baseObj'
+import { scene } from '@/base/baseObj'
 
 const range = 200 // 范围
 const count = 80 // 个数

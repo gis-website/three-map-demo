@@ -1,5 +1,5 @@
 import { createOutLine } from '../animations/halo'
-import { mouse, raycaster, camera, scene } from '../base/baseObj'
+import { mouse, raycaster, camera, scene } from '@/base/baseObj'
 import { ref } from 'vue'
 import { showGaugePoint, visibleGaugePoint } from './loadGaugePoint'
 

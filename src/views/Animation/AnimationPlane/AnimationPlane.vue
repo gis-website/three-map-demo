@@ -1,11 +1,12 @@
 <!--
  * @Author: TQtong 2733707740@qq.com
- * @Date: 2023-04-14 07:37:09
+ * @Date: 2023-04-19 09:13:40
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-17 20:51:47
- * @FilePath: \three-map-demo\src\views\Threestart\ThreeStart.vue
- * @Description: three.js begin
+ * @LastEditTime: 2023-04-23 11:46:43
+ * @FilePath: \three-map-demo\src\views\Animation\AnimationPlane\AnimationPlane.vue
+ * @Description: plane animation
 -->
+
 <template>
     <div id="map-content">
       <div id="myMap" ref="myMap"></div>
@@ -14,7 +15,7 @@
   </template>
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { renderer } from './composables/baseObj'
+import { renderer } from '@/base/baseObj'
 import { initRender } from './index'
 
 const myMap = ref()

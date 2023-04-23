@@ -1,16 +1,17 @@
 /*
  * @Author: TQtong 2733707740@qq.com
- * @Date: 2023-04-14 11:17:04
+ * @Date: 2023-04-15 13:49:48
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-15 14:19:44
- * @FilePath: \three-map-demo\src\views\ThreeMapAnimationSecond\composables\ripple.ts
- * @Description: highlight animation
+ * @LastEditTime: 2023-04-23 10:33:42
+ * @FilePath: \three-map-demo\src\views\Animation\AnimationAureole\composables\aureole.ts
+ * @Description: come true aureole
  */
+
 import * as THREE from 'three'
-import { scene } from './baseObj'
+import { scene } from '@/base/baseObj'
 import gsap from 'gsap'
 
-export const createAureole = ():any => {
+export const createAureole = ():void => {
   const circlePlane = new THREE.PlaneGeometry(1, 1)
   const circleTexture = new THREE.TextureLoader().load('./images/label.png')
   const circleMaterial = new THREE.MeshBasicMaterial({

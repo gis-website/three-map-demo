@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 17:37:47
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-19 14:36:23
+ * @LastEditTime: 2023-04-23 15:12:10
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\ThreeCustomFirstAction.vue
  * @Description: my first custom action
 -->
@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { init } from './index'
-import { renderer } from './base/baseObj'
-import { stats } from './base/datGUI'
+import { renderer } from '@/base/baseObj'
+import { stats } from '@/base/datGUI'
 
 const customMap = ref()
 const tooltip = ref()

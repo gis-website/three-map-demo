@@ -2,22 +2,22 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 17:38:25
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-21 11:40:04
+ * @LastEditTime: 2023-04-23 15:35:28
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import * as THREE from 'three'
-import { scene, control, renderer, axes, camera, clock } from './base/baseObj'
+import { scene, control, renderer, axes, camera, clock } from '@/base/baseObj'
 import { getMap } from './composables/loadMap'
 import { initGUI } from './composables/customGUI'
 import { pointerMoveEvent } from './composables/listenEvent'
-import { stats } from './base/datGUI'
-import { blowMaterial } from './base/shader'
+import { stats } from '@/base/datGUI'
+import { blowMaterial } from './animations/map'
 import { loadVideo } from './composables/loadVideo'
 import { loadHalo } from './composables/loadHalo'
 import { loadCylinderDiffusionRipple } from './composables/loadCylinderDiffusionRipple'
 import { loadPointFloat } from './composables/loadPointFloat'
-import { loadRoutationLine } from './composables/loadRoutationLine'
+import { loadRoutationLine } from './composables/loadRadianLine'
 
 const geometry = new THREE.BoxGeometry(1000, 1000, 1000) // 立方体
 

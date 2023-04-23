@@ -1,9 +1,40 @@
 
-import { gradientRampMaterial, blowMaterial } from '../base/shader'
 import * as THREE from 'three'
-import { projection, scene, map } from '../base/baseObj'
+import { projection, scene, map } from '@/base/baseObj'
 import { FontLoader } from 'three/addons/loaders/FontLoader.js'
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'
+import rippleVertex from '@/shader/ripple/vertex.glsl'
+import rippleFragment from '@/shader/ripple/fragment.glsl'
+import gradientRampVertex from '@/shader/gradientRamp/vertex.glsl'
+import gradientRampFragment from '@/shader/gradientRamp/fragment.glsl'
+
+const blowuniform = {
+  u_color: { value: new THREE.Color('#00abad') },
+  u_tcolor: { value: new THREE.Color('#c8ff00') },
+  u_r: { value: 0.25 },
+  u_length: { value: 20 } // 扫过区域
+}
+
+const gradientRampuniform = {
+  u_color: { value: new THREE.Color('#1800ff') }
+}
+
+export const blowMaterial = new THREE.ShaderMaterial({
+  vertexShader: rippleVertex,
+  fragmentShader: rippleFragment,
+  side: THREE.DoubleSide,
+  uniforms: blowuniform,
+  transparent: true,
+  depthWrite: false
+})
+
+export const gradientRampMaterial = new THREE.ShaderMaterial({
+  vertexShader: gradientRampVertex,
+  fragmentShader: gradientRampFragment,
+  side: THREE.DoubleSide,
+  uniforms: gradientRampuniform,
+  transparent: true,
+  depthWrite: false
+})
 
 /**
  * @description: 初始化目标地图

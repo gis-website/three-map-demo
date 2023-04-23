@@ -1,5 +1,13 @@
+/*
+ * @Author: TQtong 2733707740@qq.com
+ * @Date: 2023-04-16 13:40:47
+ * @LastEditors: TQtong 2733707740@qq.com
+ * @LastEditTime: 2023-04-23 15:02:47
+ * @FilePath: \three-map-demo\src\views\Animation\AnimationVideo\composables\video.ts
+ * @Description: create video animation
+ */
 import * as THREE from 'three'
-import { scene } from './baseObj'
+import { scene } from '@/base/baseObj'
 
 export const createVideoAnimation = ():void => {
   const path = '/videos/zp2.mp4'

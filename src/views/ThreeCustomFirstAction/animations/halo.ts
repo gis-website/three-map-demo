@@ -1,12 +1,21 @@
-import { scene, camera, renderer } from '../base/baseObj'
+/*
+ * @Author: TQtong 2733707740@qq.com
+ * @Date: 2023-04-18 19:49:57
+ * @LastEditors: TQtong 2733707740@qq.com
+ * @LastEditTime: 2023-04-23 15:33:25
+ * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\animations\halo.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+import { scene, camera, renderer } from '@/base/baseObj'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
-import { haloShader } from '../base/shader'
 import * as THREE from 'three'
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js'
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
+import vertexShader from '@/shader/bloomPass/vertex.glsl'
+import fragmentShader from '@/shader/bloomPass/fragment.glsl'
 
 const params = {
   exposure: 1,
@@ -49,8 +58,8 @@ export const createHalo = ():any => {
         baseTexture: { value: null },
         bloomTexture: { value: bloomComposer.renderTarget2.texture }
       },
-      vertexShader: haloShader.vertexShader,
-      fragmentShader: haloShader.fragmentShader,
+      vertexShader,
+      fragmentShader,
       defines: {}
     }), 'baseTexture'
   )

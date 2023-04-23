@@ -7,7 +7,7 @@
  * @Description: outline animation
  */
 import * as THREE from 'three'
-import { camera, scene, renderer } from '../base/baseObj'
+import { camera, scene, renderer } from '@/base/baseObj'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js'

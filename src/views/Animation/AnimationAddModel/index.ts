@@ -1,9 +1,17 @@
-import { scene, camera, control, renderer, axes } from './composables/baseObj'
-import { loadModel } from './composables/gaugePoint'
-import { loadBloomPass } from './composables/bloomPass'
+/*
+ * @Author: TQtong 2733707740@qq.com
+ * @Date: 2023-04-18 09:01:51
+ * @LastEditors: TQtong 2733707740@qq.com
+ * @LastEditTime: 2023-04-23 10:41:04
+ * @FilePath: \three-map-demo\src\views\Animation\AnimationAddModel\index.ts
+ * @Description: business center
+ */
+import { scene, camera, control, renderer, axes } from '@/base/baseObj'
+import { loadModel } from './composables/addModel'
+import { loadBloomPass } from '@/common/bloomPass'
 import * as THREE from 'three'
 
-const ENTIRE_SCENE = 0; const BLOOM_SCENE = 1
+const BLOOM_SCENE = 1
 
 const geometry = new THREE.BoxGeometry(1, 1, 1)
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
@@ -16,36 +24,13 @@ scene.add(camera)
 scene.add(axes)
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-let composer:any
-const bloomLayer = new THREE.Layers()
-bloomLayer.set(BLOOM_SCENE)
-const materials = {} as any
-
-export const initRender = () => {
-  composer = loadBloomPass()
+export const initRender = ():void => {
+  loadBloomPass()
   loadModel()
   animate()
 }
 
-const animate = () => {
+const animate = ():void => {
   requestAnimationFrame(animate)
   control.update()
-  scene.traverse(darkenNonBloomed)
-  composer.bloomComposer.render()
-  scene.traverse(restoreMaterial)
-  composer.finalComposer.render()
-}
-const darkMaterial = new THREE.MeshBasicMaterial({ color: 'black' })
-function darkenNonBloomed (obj:any) {
-  if (obj.isMesh && bloomLayer.test(obj.layers) === false) {
-    materials[obj.uuid] = obj.material
-    obj.material = darkMaterial
-  }
-}
-
-function restoreMaterial (obj:any) {
-  if (materials[obj.uuid]) {
-    obj.material = materials[obj.uuid]
-    delete materials[obj.uuid]
-  }
 }

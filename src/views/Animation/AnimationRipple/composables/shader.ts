@@ -45,11 +45,7 @@ const blowShader = {
 }
 
 const gradientRampuniform = {
-  u_color: { value: new THREE.Color('#7300ff') },
-  u_tcolor: { value: new THREE.Color('#ff9800') },
-  u_r: { value: 0.25 },
-  u_length: { value: 20 }, // 扫过区域
-  u_max: { value: 30 } // 扫过最大值
+  u_color: { value: new THREE.Color('#7300ff') }
 }
 const gradientRampShader = {
   vertexShader: ` 

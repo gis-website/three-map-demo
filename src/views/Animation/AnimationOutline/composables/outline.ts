@@ -2,12 +2,12 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 08:57:46
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-20 09:31:19
+ * @LastEditTime: 2023-04-23 11:21:22
  * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\composables\outline.ts
  * @Description: outline animation
  */
 import * as THREE from 'three'
-import { camera, scene, renderer, map } from './baseObj'
+import { camera, scene, renderer, map } from '@/base/baseObj'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js'
@@ -17,6 +17,7 @@ import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 export const mouseClick = (e: any): void => {
   // 获取在射线上的接触点
   // 获取鼠标坐标
+  console.log(typeof e)
   const mouse = new THREE.Vector2()
   const raycaster = new THREE.Raycaster()
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1

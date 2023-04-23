@@ -2,9 +2,9 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 07:37:20
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-14 07:45:16
+ * @LastEditTime: 2023-04-21 17:40:08
  * @FilePath: \three-map-demo\src\views\ThreeStart\index.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: logic center
  */
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'

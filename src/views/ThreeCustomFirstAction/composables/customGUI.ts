@@ -2,13 +2,13 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 19:09:43
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-21 10:18:24
+ * @LastEditTime: 2023-04-23 15:14:08
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\composables\customGUI.ts
  * @Description: gui service
  */
-import { scene, renderer } from '../base/baseObj'
+import { scene, renderer } from '@/base/baseObj'
 import * as THREE from 'three'
-import { gui } from '../base/datGUI'
+import { gui } from '@/base/datGUI'
 
 const params = {
   exposure: 1,

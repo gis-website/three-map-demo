@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { projection, scene } from '../base/baseObj'
+import { projection, scene } from '@/base/baseObj'
 
 const mapColorsArr = ['#fff', '#ff0']
 const mapGroup = new THREE.Group()

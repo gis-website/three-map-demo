@@ -1,8 +1,16 @@
+/*
+ * @Author: TQtong 2733707740@qq.com
+ * @Date: 2023-04-20 15:08:46
+ * @LastEditors: TQtong 2733707740@qq.com
+ * @LastEditTime: 2023-04-23 13:37:31
+ * @FilePath: \three-map-demo\src\views\Animation\AnimationPointFloatUp\composables\pointFloatUp.ts
+ * @Description: create point float up
+ */
 import * as THREE from 'three'
-import { scene } from './baseObj'
+import { scene } from '@/base/baseObj'
 
-const range = 200 // 雪花出现范围
-const count = 80 // 雪花个数
+const range = 200 // 范围
+const count = 80 // 个数
 
 export const createPointFloat = ():void => {
   const loader = new THREE.TextureLoader()
@@ -14,12 +22,11 @@ export const createPointFloat = ():void => {
       color: '#ffffff',
       depthWrite: false
     })
-    const velocity = [] as any
-    const vertices = [] as any
+    const velocity = [] as Array<number>
+    const vertices = [] as Array<number>
     const geometry = new THREE.BufferGeometry()
-    // 通过自定义几何体设置粒子位置
     for (let i = 0; i < count; i++) {
-      // 随机生成雪花的位置
+      // 随机生成粒子的位置
       vertices.push(THREE.MathUtils.randFloatSpread(200)) // x
       vertices.push(THREE.MathUtils.randFloatSpread(200)) // y
       vertices.push(THREE.MathUtils.randFloatSpread(200)) // z

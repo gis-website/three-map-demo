@@ -1,22 +1,27 @@
 /*
  * @Author: TQtong 2733707740@qq.com
- * @Date: 2023-04-14 08:24:13
+ * @Date: 2023-04-14 09:55:02
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-20 09:30:32
- * @FilePath: \three-map-demo\src\views\ThreeMapAnimationFirst\index.ts
- * @Description: main logic
+ * @LastEditTime: 2023-04-23 14:21:43
+ * @FilePath: \three-map-demo\src\views\Animation\AnimationOutline\index.ts
+ * @Description: business center
  */
+
 import * as THREE from 'three'
-import { gradientRampMaterial } from './composables/shader'
-import { projection, map, scene, axes, camera, renderer, control } from './composables/baseObj'
-import { createOutLine, mouseClick } from './composables/outline'
+import { projection, map, scene, camera, renderer, control } from '@/base/baseObj'
+import { mouseClick } from './composables/outline'
+import vertexShader from '@/shader/gradientRamp/vertex.glsl'
+import fragmentShader from '@/shader/gradientRamp/fragment.glsl'
 
 scene.add(camera)
-// scene.add(axes)
 
 renderer.setSize(window.innerWidth, window.innerHeight)
 
-export const initRender = () => {
+const gradientRampuniform = {
+  u_color: { value: new THREE.Color('#7300ff') }
+}
+
+export const initRender = ():void => {
   window.addEventListener('pointerdown', mouseClick)
   animate()
 }
@@ -77,6 +82,14 @@ export const setGeometry = (jsondata: any) => {
           opacity: 0.6
         })
 
+        const gradientRampMaterial = new THREE.ShaderMaterial({
+          vertexShader,
+          fragmentShader,
+          side: THREE.DoubleSide,
+          uniforms: gradientRampuniform,
+          transparent: true,
+          depthWrite: false
+        })
         const mesh = new THREE.Mesh(geometry, [material, gradientRampMaterial])
         const line = new THREE.Line(lineGeometry, lineMaterial)
         province.properties = elem.properties

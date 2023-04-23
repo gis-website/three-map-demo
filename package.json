@@ -14,7 +14,8 @@
     "gsap": "^3.11.5",
     "three": "^0.151.3",
     "vue": "^3.2.13",
-    "vue-class-component": "^8.0.0-0"
+    "vue-class-component": "^8.0.0-0",
+    "webpack-glsl-loader": "^1.0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
