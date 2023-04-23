@@ -136,6 +136,8 @@ export const createBaseMap = (mapData: any) => {
           bevelEnabled: false
         }
         const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+        // 如果要改不同的颜色表示省份，修改这条material的颜色为随机
+        // 注意拾取那颜色的逻辑也要改，得保存没个material的原始颜色
         const material = new THREE.MeshBasicMaterial({
           color: '#002642',
           transparent: true,

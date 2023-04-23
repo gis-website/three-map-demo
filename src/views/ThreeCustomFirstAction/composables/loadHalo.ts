@@ -2,13 +2,13 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-18 19:52:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-21 15:08:04
+ * @LastEditTime: 2023-04-23 16:57:13
  * @FilePath: \three-map-demo\src\views\ThreeCustomFirstAction\composables\loadHalo.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { createHalo } from '../animations/halo'
 import * as THREE from 'three'
-import { scene } from '@/base/baseObj'
+import { scene, camera, renderer } from '@/base/baseObj'
 
 const ENTIRE_SCENE = 0
 const BLOOM_SCENE = 1
@@ -27,7 +27,18 @@ export const loadHalo = (): void => {
     scene.traverse(restoreMaterial)
     finalComposer.render()
   }
+  window.onresize = function () {
+    const width = window.innerWidth
+    const height = window.innerHeight
 
+    camera.aspect = width / height
+    camera.updateProjectionMatrix()
+
+    renderer.setSize(width, height)
+
+    bloomComposer.setSize(width, height)
+    finalComposer.setSize(width, height)
+  }
   haloRender()
 }
 
