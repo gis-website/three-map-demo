@@ -6,7 +6,8 @@
   </template>
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { renderer, animate } from '@/views/ThreeStart/index'
+import { animate } from './index'
+import { renderer } from '@/base/baseObj'
 
 const myMap = ref()
 

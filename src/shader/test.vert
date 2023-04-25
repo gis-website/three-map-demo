@@ -1,1 +1,0 @@
-uniform float NAME = 0;
