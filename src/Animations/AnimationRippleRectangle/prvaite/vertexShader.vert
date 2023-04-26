@@ -6,6 +6,8 @@ uniform float time;
 uniform vec3 downColor;
 uniform float speed;
 uniform float height;
+uniform vec3 forceColor;
+
 
 void main(){
     vec3 targetColor=upColor2-downColor;
@@ -17,7 +19,7 @@ void main(){
     
     vec3 transformed=position;
 
-    vColor=downColor+percent*disColor;
+    vColor=forceColor;
 
     if(position.y > height / -2.){
         transformed.y -= cos(time) * speed;
