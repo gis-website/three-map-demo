@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 07:37:20
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-26 22:53:04
+ * @LastEditTime: 2023-04-27 11:03:56
  * @FilePath: \three-map-demo\src\views\ThreeStart\index.ts
  * @Description: logic center
  */
@@ -27,7 +27,7 @@ const planeShaderMaterial = new THREE.ShaderMaterial({
 
 const listShaders = [] as any
 listShaders.push(planeShaderMaterial)
-const planeGeometry = new THREE.PlaneGeometry(50, 50)
+const planeGeometry = new THREE.PlaneGeometry(100, 100)
 
 const plane = new THREE.Mesh(planeGeometry, planeShaderMaterial)
 
@@ -57,13 +57,19 @@ export const animate = () => {
       const distance = box.position.distanceTo(plane.position)
 
       const scale = listShader.uniforms.scale.value
-      const far = scale * 25
-      const near = (scale - 0.1) * 25
+      const far = scale * 55
+      const near = (scale - 0.1) * 55
+
+      const decay = scale > 0.8 ? 1 - (scale - 0.8) * 5 : 1
+      box.material.uniforms.decay = { value: decay }
 
       if (distance > near && distance < far) {
-        box.material.uniforms.forceColor = { value: forceColor }
+        const percent = (far - distance) / (far - near)
+        box.material.uniforms.forceColor.value = forceColor
+        box.material.uniforms.forceColorProgress.value = percent
       } else {
-        box.material.uniforms.forceColor = { value: forceColor1 }
+        // box.material.uniforms.forceColor. = { value: forceColor1 }
+        box.material.uniforms.forceColorProgress.value = -1
       }
     })
   })

@@ -1,5 +1,5 @@
-import fragmentShader from '../prvaite/fragmentShader.frag'
-import vertexShader from '../prvaite/vertexShader.vert'
+import fragmentShader from '../private/fragmentShader.frag'
+import vertexShader from '../private/vertexShader.vert'
 import * as THREE from 'three'
 import { scene } from '@/base/baseObj'
 
@@ -9,7 +9,9 @@ const uniforms = {
   downColor: { value: new THREE.Color('#f00') },
   time: { value: 0 },
   speed: { value: 1 },
-  height: { value: null }
+  height: { value: null },
+  forceColor: { value: new THREE.Color('#fff') },
+  forceColorProgress: { value: 0 }
 }
 
 const shaderMaterial = new THREE.ShaderMaterial({
@@ -23,7 +25,7 @@ const rectangles = [] as any
 const group = new THREE.Group()
 
 export const loadRectangle = ():void => {
-  for (let index = 0; index < 100; index++) {
+  for (let index = 0; index < 1000; index++) {
     const { random } = Math
     const height = random() * 10
     const geometry = new THREE.BoxGeometry(random() * 2, height, random() * 2, 10, 10, 10)
@@ -36,9 +38,9 @@ export const loadRectangle = ():void => {
 
     const mesh = new THREE.Mesh(geometry, itemShader)
 
-    mesh.position.x = (0.5 - random()) * 30
+    mesh.position.x = (0.5 - random()) * 100
     mesh.position.y = height / 2
-    mesh.position.z = (0.5 - random()) * 30
+    mesh.position.z = (0.5 - random()) * 100
 
     group.add(mesh)
     rectangles.push(mesh)
