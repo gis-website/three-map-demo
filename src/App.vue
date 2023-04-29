@@ -2,13 +2,14 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:40:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-26 12:33:12
+ * @LastEditTime: 2023-04-28 14:58:45
  * @FilePath: \three-map-demo\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEat
 -->
 <template>
   <!-- <AnimationGradientRampRectangle/> -->
-  <AnimationRippleRectangle/>
+  <!-- <AnimationRippleRectangle/> -->
+  <AnimationAudio/>
   <!-- <AnimationAddModel/> -->
 
   <!-- <ThreeCustomFirstAction/> -->
@@ -19,6 +20,7 @@ import { Options, Vue } from 'vue-class-component'
 
 import AnimationGradientRampRectangle from './Animations/AnimationGradientRampRectangle/AnimationGradientRampRectangle'
 import AnimationRippleRectangle from './Animations/AnimationRippleRectangle/AnimationRippleRectangle'
+import AnimationAudio from './Animations/AnimationAudio/AnimationAudio'
 
 import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFirstAction'
 import AnimationAddModel from './Animations/AnimationAddModel/AnimationAddModel'
@@ -26,8 +28,9 @@ import AnimationAddModel from './Animations/AnimationAddModel/AnimationAddModel'
 @Options({
   components: {
     // AnimationGradientRampRectangle,
-    AnimationRippleRectangle
+    // AnimationRippleRectangle
     // AnimationAddModel
+    AnimationAudio
 
     // ThreeCustomFirstAction
   }
