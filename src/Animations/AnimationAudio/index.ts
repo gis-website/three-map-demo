@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 07:37:20
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-28 16:48:11
+ * @LastEditTime: 2023-05-04 08:43:16
  * @FilePath: \three-map-demo\src\views\ThreeStart\index.ts
  * @Description: logic center
  */
@@ -42,32 +42,32 @@ export const playMusic = ():void => {
 
   const audio = new THREE.Audio(listener)
 
-  //   const mediaElement = new Audio('./music/2.map3')
-  //   mediaElement.play()
-  //   audio.setMediaElementSource(mediaElement)
+  const mediaElement = new Audio('./music/2.map3')
+  mediaElement.play()
+  audio.setMediaElementSource(mediaElement)
 
-  //   analyser = new THREE.AudioAnalyser(audio, fftSize)
+  analyser = new THREE.AudioAnalyser(audio, fftSize)
 
-  //   const uniforms = {
-  //     tAudioData: {
-  //       value: new THREE.DataTexture(analyser.data, fftSize / 2, 1, format)
-  //     }
-  //   }
+  const uniforms = {
+    tAudioData: {
+      value: new THREE.DataTexture(analyser.data, fftSize / 2, 1, format)
+    }
+  }
 
-  //   const material = new THREE.ShaderMaterial({
-  //     uniforms: uniforms,
-  //     vertexShader,
-  //     fragmentShader
-  //   })
+  const material = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader,
+    fragmentShader
+  })
 
-  //   const geometry = new THREE.PlaneGeometry(1, 1)
+  const geometry = new THREE.PlaneGeometry(1, 1)
 
-  //   const mesh = new THREE.Mesh(geometry, material)
-  //   scene.add(mesh)
+  const mesh = new THREE.Mesh(geometry, material)
+  scene.add(mesh)
   const render = () => {
     requestAnimationFrame(render)
-    // analyser.getFrequencyData()
-    // uniforms.tAudioData.value.needsUpdate = true
+    analyser.getFrequencyData()
+    uniforms.tAudioData.value.needsUpdate = true
   }
   render()
 }
