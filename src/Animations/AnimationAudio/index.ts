@@ -2,7 +2,7 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-14 07:37:20
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-05-04 12:31:20
+ * @LastEditTime: 2023-05-06 08:39:48
  * @FilePath: \three-map-demo\src\views\ThreeStart\index.ts
  * @Description: logic center
  */
@@ -46,7 +46,7 @@ const animate = () => {
 }
 
 export const click = ():void => {
-  const src = './music/1.mp3'
+  const src = './static/music/1.mp3'
   const size = 128
   const format = renderer.capabilities.isWebGL2
     ? THREE.RedFormat

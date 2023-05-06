@@ -2,14 +2,15 @@
  * @Author: TQtong 2733707740@qq.com
  * @Date: 2023-04-12 08:40:07
  * @LastEditors: TQtong 2733707740@qq.com
- * @LastEditTime: 2023-04-28 14:58:45
+ * @LastEditTime: 2023-05-05 15:24:16
  * @FilePath: \three-map-demo\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEat
 -->
 <template>
   <!-- <AnimationGradientRampRectangle/> -->
   <!-- <AnimationRippleRectangle/> -->
-  <AnimationAudio/>
+  <!-- <AnimationAudio/> -->
+  <AnimationBuildRipple/>
   <!-- <AnimationAddModel/> -->
 
   <!-- <ThreeCustomFirstAction/> -->
@@ -24,13 +25,15 @@ import AnimationAudio from './Animations/AnimationAudio/AnimationAudio'
 
 import ThreeCustomFirstAction from './views/ThreeCustomFirstAction/ThreeCustomFirstAction'
 import AnimationAddModel from './Animations/AnimationAddModel/AnimationAddModel'
+import AnimationBuildRipple from './Animations/AnimationBuildRipple/AnimationBuildRipple'
 
 @Options({
   components: {
     // AnimationGradientRampRectangle,
     // AnimationRippleRectangle
     // AnimationAddModel
-    AnimationAudio
+    // AnimationAudio
+    AnimationBuildRipple
 
     // ThreeCustomFirstAction
   }
