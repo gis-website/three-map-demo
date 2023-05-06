@@ -16,9 +16,11 @@ void main(){
     // 计算出混合颜色
     vec3 gradMixColor=mix(distGradColor.xyz,u_TopColor,gradMix);
     
-    // if(ToTopMix>0.){
-    //     gl_FragColor=mix(gl_FragColor,vec4(.8,.8,1,1),ToTopMix/u_ToTopWidth);
-    // }
-    
+    if(ToTopMix>0.){
+        gl_FragColor=mix(gl_FragColor,vec4(0.8824, 0.0, 1.0, 1.0),ToTopMix/u_ToTopWidth);
+    }
+    else {
     gl_FragColor=vec4(gradMixColor,1);
+
+    }
 }
